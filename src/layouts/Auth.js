@@ -18,7 +18,7 @@
 import React from "react";
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 // reactstrap components
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, CardBody, CardTitle } from "reactstrap";
 
 // core components
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
@@ -27,7 +27,6 @@ import AuthFooter from "components/Footers/AuthFooter.js";
 import { LoginProvider } from "context/LoginContext";
 import { NotificationProvider } from "context/NotificationContext";
 import { LoadingProvider } from "context/LoadingContext";
-
 
 import routes from "routes.js";
 
@@ -61,50 +60,117 @@ const Auth = (props) => {
 
   return (
     <>
-      <div className="main-content" ref={mainContent}>
+      <div
+        className="main-content"
+        ref={mainContent}
+        style={{ background: "#EBEBEB" }}
+      >
         <AuthNavbar />
-        <div className="header bg-gradient-info py-7 py-lg-8">
+        <div
+          className="header py-7 py-lg-8"
+          style={{
+            background: "linear-gradient(90deg, #84c63b 0%, #58ab01 100%)",
+          }}
+        >
           <Container>
             <div className="header-body text-center mb-7">
-              <Row className="justify-content-center">
-                <Col lg="5" md="6">
-                  <h1 className="text-white">Welcome!</h1>
-                  <p className="text-lead text-light">
-                    Use these awesome forms to login or create new account in
-                    your project for free.
-                  </p>
-                </Col>
-              </Row>
+
+               
+                <h1
+                  className="text-white fw-bold mb-4"
+                  style={{
+                    fontSize: "2rem",
+                    letterSpacing: "1px",
+                    textShadow: "1px 1px 4px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  Bienvenido
+                </h1>
+                <Row className="justify-content-center align-items-center">
+                  <Col
+                    lg="3"
+                    md="4"
+                    sm="12"
+                    className="d-flex justify-content-center mb-4 mb-lg-0"
+                    style={{ gap: "20px" }}
+                  >
+                    <img
+                      alt="Logo empresa"
+                      src={require("assets/img/icons/logo_sin_fondo.png")}
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Col>
+
+                  <Col
+                    lg="3"
+                    md="4"
+                    sm="12"
+                    className="d-flex justify-content-center"
+                    style={{ gap: "20px" }}
+                  >
+                    <img
+                      alt="Logo empresa"
+                      src={require("assets/img/icons/logo_colanta.png")}
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Col>
+
+                </Row>
+                <h2
+                  className="text-light mb-5"
+                  style={{
+                    fontWeight: "500",
+                    textShadow: "1px 1px 3px rgba(0,0,0,0.2)",
+                  }}
+                >
+                  Distribuidor Autorizado
+                </h2>
             </div>
           </Container>
-          <div className="separator separator-bottom separator-skew zindex-100">
-            <svg
+          
+            {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="none"
               version="1.1"
               viewBox="0 0 2560 100"
               x="0"
               y="0"
+               style={{background: "#EBEBEB"}}
             >
               <polygon
                 className="fill-default"
                 points="2560 0 2560 100 0 100"
+                style={{background: "#EBEBEB"}}
               />
-            </svg>
-          </div>
+            </svg> */}
+          
         </div>
         {/* Page content */}
-        <Container className="mt--8 pb-5">
-          <Row className="justify-content-center">
+        <Container className="mt--8 pb-5" >
+          <Row
+            className="justify-content-center"
+           
+          >
             <LoadingProvider>
-            <NotificationProvider>
-            <LoginProvider>
-            <Routes>
-              {getRoutes(routes)}
-              <Route path="*" element={<Navigate to="/auth/login" replace />} />
-            </Routes>
-            </LoginProvider>
-            </NotificationProvider>
+              <NotificationProvider>
+                <LoginProvider>
+                  <Routes>
+                    {getRoutes(routes)}
+                    <Route
+                      path="*"
+                      element={<Navigate to="/auth/login" replace />}
+                    />
+                  </Routes>
+                </LoginProvider>
+              </NotificationProvider>
             </LoadingProvider>
           </Row>
         </Container>

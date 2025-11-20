@@ -25,6 +25,9 @@ import Cliente from "views/pages/cliente/Index";
 import Articulo from "views/pages/articulo/Index";
 import Compra from "views/pages/compra/Index";
 import Venta from "views/pages/venta/Index";
+import Tickets from "views/pages/tickets/Index";
+import FormularioCliente from "views/pages/FormularioCliente.js";
+import Aceptar from "views/pages/aceptar/index.js";
 
 var routes = [
   {
@@ -48,13 +51,34 @@ var routes = [
     component: <Compra />,
     layout: "/admin",
   },*/
-  {
-    path: "/articulo",
-    name: "Articulo",
-    icon: "ni ni-tag text-success",
-    component: <Articulo />,
+  // {
+  //   path: "/articulo",
+  //   name: "Articulo",
+  //   icon: "ni ni-tag text-success",
+  //   component: <Articulo />,
+  //   layout: "/admin",
+  // },
+   {
+    path: "/cliente",
+    name: "Cliente",
+    icon: "ni ni-user-run text-primary",
+    component: <Cliente />,
     layout: "/admin",
   },
+  {
+    path: "/tickets",
+    name: "Tickets",
+    icon: "ni ni-user-run text-primary",
+    component: <Tickets />,
+    layout: "/admin",
+  },
+  {
+    path: "/registro-cliente", // ← Debe coincidir con el NavLink
+    name: "Registro Cliente",
+    icon: "ni ni-single-02 text-yellow",
+    component: <FormularioCliente />,
+    layout: "/auth"
+},
   /*{
     path: "/proveedor",
     name: "Proveedor",
@@ -62,13 +86,7 @@ var routes = [
     component: <Proveedor />,
     layout: "/admin",
   },
-  {
-    path: "/cliente",
-    name: "Cliente",
-    icon: "ni ni-user-run text-primary",
-    component: <Cliente />,
-    layout: "/admin",
-  },
+ 
   {
     path: "/caracteristica",
     name: "Caracteristica",
@@ -89,6 +107,13 @@ var routes = [
     icon: "ni ni-key-25 text-info",
     component: <Login />,
     layout: "/auth",
-  }
+  },
+  {
+    path: "/aceptar",
+    name: "Aceptar Clientes",
+    icon: "ni ni-user-run text-primary",
+    component: <Aceptar />,
+    layout: "/admin",
+  },
 ];
 export default routes;

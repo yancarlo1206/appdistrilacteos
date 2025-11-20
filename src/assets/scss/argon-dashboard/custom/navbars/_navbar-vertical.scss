@@ -31,8 +31,19 @@
 
     .navbar-brand-img,
     .navbar-brand > img {
+        width: 150px;
+        height: 150px;
         max-width: 100%;
-        max-height: 2rem;
+        max-height: 5rem;
+    }
+
+    // 🎯 CUSTOM LOGO STYLING
+    .sidebar-logo {
+        width: 120px !important;
+        height: auto !important;
+        object-fit: contain !important;
+        display: block;
+        margin: 0 auto;
     }
 
 
@@ -261,6 +272,15 @@
 
                     .navbar-brand-img {
                         max-height: 2.5rem;
+                    }
+
+                    // 🎯 CUSTOM LOGO STYLING EXPANDED
+                    .sidebar-logo {
+                        width: 140px !important;
+                        height: auto !important;
+                        object-fit: contain !important;
+                        display: block;
+                        margin: 0 auto;
                     }
 
                     // Navbar user

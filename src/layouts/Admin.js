@@ -17,17 +17,12 @@
 */
 import React from "react";
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
-// reactstrap components
 import { Container } from "reactstrap";
-// core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-
-import { NotificationProvider } from "context/NotificationContext";
-import { LoadingProvider } from "context/LoadingContext";
+import Header from "components/Headers/Header.js"; // 👈 Importa tu Header de notificaciones
 import { InternetConnectionProvider } from "context/InternetConnectionContext";
-
 import routes from "routes.js";
 
 const Admin = (props) => {
@@ -75,29 +70,28 @@ const Admin = (props) => {
         routes={routes}
         logo={{
           innerLink: "/admin/index",
-          imgSrc: require("../assets/img/brand/argon-react.png"),
+          imgSrc: require("assets/img/icons/logo_colanta5.png"),
           imgAlt: "...",
+          // Ajusta este style para cambiar el tamaño del logo en el sidebar
+          className: "sidebar-logo"
         }}
       />
-      <LoadingProvider>
-      <NotificationProvider >
-      <InternetConnectionProvider >
-      <div className="main-content" ref={mainContent}>
-        <AdminNavbar
-          {...props}
-          brandText={getBrandText(props?.location?.pathname)}
-        />
-        <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/admin/index" replace />} />
-        </Routes>
-        <Container fluid>
-          <AdminFooter />
-        </Container>
-      </div>
+      <InternetConnectionProvider>
+        <div className="main-content" ref={mainContent}>
+          <AdminNavbar
+            {...props}
+            brandText={getBrandText(props?.location?.pathname)}
+          />
+          <Header /> {/* 👈 AQUÍ insertas tu Header con la campana */}
+          <Routes>
+            {getRoutes(routes)}
+            <Route path="*" element={<Navigate to="/admin/index" replace />} />
+          </Routes>
+          <Container fluid>
+            <AdminFooter />
+          </Container>
+        </div>
       </InternetConnectionProvider>
-      </NotificationProvider>
-      </LoadingProvider>
     </>
   );
 };
