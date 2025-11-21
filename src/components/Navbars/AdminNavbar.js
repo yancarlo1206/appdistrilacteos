@@ -49,15 +49,16 @@ const AdminNavbar = (props) => {
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
                 <Media className="align-items-center">
-                  <span className="avatar avatar-sm rounded-circle">
+                  <span className="avatar avatar-sm">
                     <img
                       alt="..."
-                      src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                      src={require("../../assets/img/icons/perfil-sin-foto.jpeg")}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
+                      Deison Cardenas
                     </span>
                   </Media>
                 </Media>
@@ -69,18 +70,6 @@ const AdminNavbar = (props) => {
                 <DropdownItem to="/admin/user-profile" tag={Link}>
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-settings-gear-65" />
-                  <span>Settings</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-calendar-grid-58" />
-                  <span>Activity</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-support-16" />
-                  <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>

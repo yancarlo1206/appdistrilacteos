@@ -15,20 +15,14 @@ import NotificationContext from "context/NotificationContext";
 import LoadingContext from "context/LoadingContext";
 import { useNavigate } from "react-router";
 
-const ClienteContext = createContext();
+const TicketsContext = createContext();
 
-
-
-
-const ClienteProvider = ({ children }) => {
+const TicketsProvider = ({ children }) => {
   const [toDetail, setToDetail] = useState();
   const [toUpdate, setToUpdate] = useState();
   const [detail, setDetail] = useState({});
   const [module, setModule] = useState();
 
-   const [ciudades, setCiudades] = useState([]);
-   const [tipoDocumentos, setTipoDocumentos] = useState([]);
-   const [estadoClientes, setEstadoClientes] = useState([]);
 
   const navigate = useNavigate();
   const { REACT_APP_API_URL } = process.env;
@@ -40,17 +34,15 @@ const ClienteProvider = ({ children }) => {
   const { db } = state;
 
   let api = helpHttp();
-  let url = REACT_APP_API_URL + "cliente";
+  let url = REACT_APP_API_URL + "tickets";
 
   useEffect(() => {
     
-    fetchData();
+    /*fetchData();
     fetchDataCiudades();
     fetchDataTipoDocumentos();
-    fetchDataEstadoClientes();
+    fetchDataEstadoClientes();*/
   }, []);
-
-  
 
   useEffect(() => {
     if (toUpdate && toUpdate != 0) {
@@ -80,7 +72,7 @@ const ClienteProvider = ({ children }) => {
     });
   };
 
-const fetchDataCiudades = () => {
+/*const fetchDataCiudades = () => {
         let urlFetch = REACT_APP_API_URL+"ciudad";
         api.get(urlFetch).then((res) => {
             var data = res.data.map(function (obj) {
@@ -112,7 +104,7 @@ const fetchDataCiudades = () => {
             });
             setEstadoClientes(data);
         });
-    };
+    };*/
 
 
 
@@ -128,7 +120,7 @@ const fetchDataCiudades = () => {
     api.post(endpoint, options).then((res) => {
       if (!res.err) {
         dispatch({ type: TYPES.CREATE_DATA, payload: res.data });
-        navigate("/admin/cliente/");
+        navigate("/admin/tickets/");
         setType("success");
         setMessage("The registry was updated correctly");
         setStatus(1);
@@ -151,7 +143,7 @@ const fetchDataCiudades = () => {
       if (!res.err) {
         setDetail(res.data);
         dispatch({ type: TYPES.UPDATE_DATA, payload: res.data });
-        navigate("/admin/cliente");
+        navigate("/admin/tickets");
         setType("success");
         setMessage("The registry was updated correctly");
         setStatus(1);
@@ -194,15 +186,15 @@ const fetchDataCiudades = () => {
     module,
     setModule,
     setDetail,
-    ciudades,
+    /*ciudades,
     tipoDocumentos,
-    estadoClientes,
+    estadoClientes,*/
   };
 
   return (
-    <ClienteContext.Provider value={data}>{children}</ClienteContext.Provider>
+    <TicketsContext.Provider value={data}>{children}</TicketsContext.Provider>
   );
 };
 
-export { ClienteProvider };
-export default ClienteContext;
+export { TicketsProvider };
+export default TicketsContext;
