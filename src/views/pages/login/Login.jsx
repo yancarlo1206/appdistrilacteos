@@ -21,7 +21,7 @@ import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const initialForm = {
-  usuario: "",
+  username: "",
   password: "",
 };
 
@@ -156,7 +156,7 @@ const Login = () => {
                   fontSize: "1.5rem",
                 }}
               >
-                Iniciar Sesion
+                Iniciar Sesión
               </h2>
             </div>
             <Form role="form">
@@ -173,11 +173,11 @@ const Login = () => {
                 >
                   <div style={{ width: "100%", position: "relative" }}>
                     <input
-                      id="input-usuario"
+                      id="input-username"
                       style={inputStyle}
                       type="text"
-                      name="usuario"
-                      value={form.usuario}
+                      name="username"
+                      value={form.username}
                       onChange={handleChange}
                       onBlur={(e) => {
                         handleBlur(e);
@@ -187,17 +187,17 @@ const Login = () => {
                       required
                     />
                     <label
-                      htmlFor="input-usuario"
+                      htmlFor="input-username"
                       style={{
                         ...labelStyle,
                         top:
-                          form.usuario !== "" || usuarioFocus
+                          form.username !== "" || usuarioFocus
                             ? "-20px"
                             : "10px",
                         fontSize:
-                          form.usuario !== "" || usuarioFocus ? "13px" : "16px",
+                          form.username !== "" || usuarioFocus ? "13px" : "16px",
                         color:
-                          form.usuario !== "" || usuarioFocus
+                          form.username !== "" || usuarioFocus
                             ? "gray"
                             : "rgba(0, 0, 0, 0.6)",
                       }}
@@ -211,7 +211,7 @@ const Login = () => {
                       className="invalid-feedback"
                       style={{ color: "red", fontSize: "12px" }}
                     >
-                      {errors.usuario}
+                      {errors.username}
                     </div>
                   </div>
                 </InputGroup>

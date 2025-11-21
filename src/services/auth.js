@@ -17,11 +17,11 @@ const login = (data) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("token_hensall_energy");
+  localStorage.removeItem("token");
 };
 
 const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("token_hensall_energy"));
+  return JSON.parse(localStorage.getItem("token"));
 };
 
 const getDecodeToken = () => {
@@ -43,7 +43,7 @@ const checkTokenExpiry = () => {
     let timeExpired = getExpToken();
     let expired =  (timeExpired-1000) < ((Date.now() - 1000 * 60 * 5) / 1000);
     if (expired) {
-      localStorage.removeItem("token_hensall_energy");
+      localStorage.removeItem("token");
       window.location.href = "/auth/login";
     }  
     resolve();

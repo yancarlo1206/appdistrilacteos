@@ -1,10 +1,10 @@
 export const validationsForm = (form) => {
     let errores = {};
 
-    if (!form.usuario) {
-        errores.usuario = "El campo usuario es obligatorio.";
+    if (!form.username) {
+        errores.username = "El campo usuario es obligatorio.";
     }else{
-        errores.usuario = "";
+        errores.username = "";
     }
 
     if (!form.password) {
