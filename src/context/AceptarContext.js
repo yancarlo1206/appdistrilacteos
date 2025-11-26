@@ -155,7 +155,7 @@ export const AceptarProvider = ({ children }) => {
         addNotification({
           id: cliente.id,
           mensaje: `Nuevo registro: ${cliente.nombre}`,
-          estado: cliente.cliente_estado?.descripcion || "En proceso",
+          estado: cliente.clienteestado?.descripcion || "En proceso",
           fecha: new Date().toISOString(),
         });
       }
@@ -188,7 +188,7 @@ export const AceptarProvider = ({ children }) => {
           setClientesPendientes((prev) =>
             prev.map((c) =>
               c.id === id
-                ? { ...c, cliente_estado: { ...c.cliente_estado, descripcion: "En revisión" } }
+                ? { ...c, clienteestado: { ...c.clienteestado, descripcion: "En revisión" } }
                 : c
             )
           );

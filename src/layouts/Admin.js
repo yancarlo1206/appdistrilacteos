@@ -70,7 +70,7 @@ const Admin = (props) => {
         routes={routes}
         logo={{
           innerLink: "/admin/index",
-          imgSrc: require("assets/img/icons/logo_colanta5.png"),
+          imgSrc: require("assets/img/icons/vaca.png"),
           imgAlt: "...",
           // Ajusta este style para cambiar el tamaño del logo en el sidebar
           className: "sidebar-logo"

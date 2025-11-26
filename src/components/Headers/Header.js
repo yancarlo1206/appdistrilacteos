@@ -172,9 +172,9 @@ const Header = () => {
               {/* === NOTIFICACIONES === */}
               <Col lg="6" xl="3">
                 <Card
-                  className={`card-stats mb-4 mb-xl-0 ${
-                    animar ? "shake-animation" : ""
-                  }`}
+                  className={`card-stats mb-4 mb-xl-0 $
+                    
+                  `}
                   style={{ cursor: "pointer", position: "relative" }}
                   onClick={() => navigate("/admin/aceptar")}
                 >
@@ -194,7 +194,7 @@ const Header = () => {
                       }}
                     >
                       <div
-                        className="icon icon-shape bg-info text-white rounded-circle shadow"
+                        className={`icon icon-shape bg-info text-white rounded-circle shadow ${animar ? "bell-animate" : ""}`}
                         style={{
                           width: "40px",
                           height: "40px",
@@ -208,7 +208,7 @@ const Header = () => {
                           setMostrarPopup(!mostrarPopup);
                         }}
                       >
-                        <i className="fas fa-bell" />
+                        <i className={`fas fa-bell `} />
                       </div>
 
                       {/* 🔴 CONTADOR */}
@@ -317,16 +317,19 @@ const Header = () => {
         justify-content: center;
         height: 100px;
         }
-          @keyframes shake {
-            0% { transform: translateX(0); }
-            20% { transform: translateX(-5px); }
-            40% { transform: translateX(5px); }
-            60% { transform: translateX(-5px); }
-            80% { transform: translateX(5px); }
-            100% { transform: translateX(0); }
-          }
-          .shake-animation {
-            animation: shake 0.6s ease-in-out infinite;
+          .bell-animate {
+  animation: bellShake 0.2s ease-in-out;
+}
+
+@keyframes bellShake {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-15deg); }
+  40% { transform: rotate(15deg); }
+  60% { transform: rotate(-10deg); }
+  80% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
           }
         `}
       </style>

@@ -50,11 +50,11 @@ function List({ tab }) {
   // modal detalle
   const [detailModalOpen, setDetailModalOpen] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
-  const [clienteInfo, setClienteInfo] = useState(null); // 👈 datos de cliente_informacion
+  const [clienteInfo, setClienteInfo] = useState(null); // 👈 datos de cliente informacion
   const [editMode, setEditMode] = useState(false);
   const [loadingDetail, setLoadingDetail] = useState(false);
 
-  // catálogos extra para cliente_informacion
+  // catálogos extra para cliente informacion
   const [zonasDB, setZonasDB] = useState([]);
   const [tiposClienteDB, setTiposClienteDB] = useState([]);
   const [vendedoresDB, setVendedoresDB] = useState([]);
@@ -80,7 +80,7 @@ function List({ tab }) {
 
   // formulario edición dentro del modal de detalle
   const [editForm, setEditForm] = useState({
-    tipo_documento: "",
+    tipodocumento: "",
     documento: "",
     nombre: "",
     telefono: "",
@@ -88,27 +88,27 @@ function List({ tab }) {
     correo: "",
     ciudad: "",
     observacion: "",
-    cliente_estado: "",
+    clienteEstado: "",
   });
 
   const [editInfoForm, setEditInfoForm] = useState({
     zona: "",
-    cliente_tipo: "",
+    tipocliente: "",
     vendedor: "",
-    lista_precio: "",
+    listaprecio: "",
   });
 
   const hideAlert = () => setState({ alert: null });
 
-  // cargar catálogos para cliente_informacion
+  // cargar catálogos para cliente informacion
   useEffect(() => {
     const fetchCatalogos = async () => {
       try {
         const [zRes, tcRes, vRes, lpRes] = await Promise.all([
           fetch(`${API_URL}zona`),
-          fetch(`${API_URL}cliente_tipo`),
+          fetch(`${API_URL}tipocliente`),
           fetch(`${API_URL}vendedor`),
-          fetch(`${API_URL}lista_precio`),
+          fetch(`${API_URL}listaprecio`),
         ]);
         const [z, tc, v, lp] = await Promise.all([
           zRes.json(),
@@ -137,7 +137,7 @@ function List({ tab }) {
   const handleSave = async () => {
     try {
       const nuevoCliente = {
-        tipo_documento: { id: parseInt(formData.tipoDocumento) },
+        tipodocumento: { id: parseInt(formData.tipodocumento) },
         documento: formData.documento,
         nombre: formData.nombre,
         telefono: formData.telefono,
@@ -145,7 +145,7 @@ function List({ tab }) {
         correo: formData.correo,
         ciudad: { id: parseInt(formData.ciudad) },
         observacion: formData.observacion,
-        cliente_estado: {
+        clienteEstado: {
           id: formData.estado ? parseInt(formData.estado) : 1, // En proceso por defecto
         },
       };
@@ -203,7 +203,7 @@ function List({ tab }) {
 
     // llenar formulario de edición con datos del cliente
     setEditForm({
-      tipo_documento: cliente.tipo_documento?.id || "",
+      tipodocumento: cliente.tipodocumento?.id || "",
       documento: cliente.documento || "",
       nombre: cliente.nombre || "",
       telefono: cliente.telefono || "",
@@ -211,12 +211,12 @@ function List({ tab }) {
       correo: cliente.correo || "",
       ciudad: cliente.ciudad?.id || "",
       observacion: cliente.observacion || "",
-      cliente_estado: cliente.cliente_estado?.id || "",
+      clienteEstado: cliente.clienteEstado?.id || "",
     });
 
     try {
       // traemos TODA la info y buscamos la del cliente
-      const resInfo = await fetch(`${API_URL}cliente_informacion`);
+      const resInfo = await fetch(`${API_URL}clienteinformacion`);
       const dataInfo = await resInfo.json();
       const infoCliente =
         (dataInfo.data || []).find((ci) => ci.cliente?.id === cliente.id) ||
@@ -225,18 +225,18 @@ function List({ tab }) {
 
       setEditInfoForm({
         zona: infoCliente?.zona?.id || "",
-        cliente_tipo: infoCliente?.cliente_tipo?.id || "",
+        tipocliente: infoCliente?.tipocliente?.id || "",
         vendedor: infoCliente?.vendedor?.id || "",
-        lista_precio: infoCliente?.lista_precio?.id || "",
+        listaprecio: infoCliente?.listaprecio?.id || "",
       });
     } catch (err) {
-      console.error("Error cargando cliente_informacion:", err);
+      console.error("Error cargando clienteinformacion:", err);
     } finally {
       setLoadingDetail(false);
     }
   };
 
-  // guardar edición (cliente + cliente_informacion)
+  // guardar edición (cliente + cliente informacion)
   const handleSaveEdit = () => {
     setState({
       alert: (
@@ -263,12 +263,12 @@ function List({ tab }) {
                     correo: editForm.correo,
                     telefono: editForm.telefono,
                     direccion: editForm.direccion,
-                    tipo_documento: { id: Number(editForm.tipo_documento) },
+                    tipodocumento: { id: Number(editForm.tipodocumento) },
                     ciudad: { id: Number(editForm.ciudad) },
                     observacion: editForm.observacion || "",
-                    cliente_estado: {
-                      id: editForm.cliente_estado
-                        ? Number(editForm.cliente_estado)
+                    clienteEstado: {
+                      id: editForm.clienteEstado
+                        ? Number(editForm.clienteEstado)
                         : 1,
                     },
                   }),
@@ -281,33 +281,33 @@ function List({ tab }) {
                 throw new Error("Error actualizando cliente");
               }
 
-              // 2) guardar/actualizar cliente_informacion
+              // 2) guardar/actualizar cliente informacion
               const infoBody = {
                 cliente: { id: selectedClient.id },
                 zona: editInfoForm.zona
                   ? { id: Number(editInfoForm.zona) }
                   : null,
-                cliente_tipo: editInfoForm.cliente_tipo
-                  ? { id: Number(editInfoForm.cliente_tipo) }
+                tipocliente: editInfoForm.tipocliente
+                  ? { id: Number(editInfoForm.tipocliente) }
                   : null,
                 vendedor: editInfoForm.vendedor
                   ? { id: Number(editInfoForm.vendedor) }
                   : null,
-                lista_precio: editInfoForm.lista_precio
-                  ? { id: Number(editInfoForm.lista_precio) }
+                listaprecio: editInfoForm.listaprecio
+                  ? { id: Number(editInfoForm.listaprecio) }
                   : null,
               };
 
               if (
                 infoBody.zona &&
-                infoBody.cliente_tipo &&
+                infoBody.tipocliente &&
                 infoBody.vendedor &&
-                infoBody.lista_precio
+                infoBody.listaprecio
               ) {
                 if (clienteInfo && clienteInfo.id) {
                   // PUT
                   await fetch(
-                    `${API_URL}cliente_informacion/${clienteInfo.id}`,
+                    `${API_URL}clienteinformacion/${clienteInfo.id}`,
                     {
                       method: "PUT",
                       headers: { "Content-Type": "application/json" },
@@ -316,7 +316,7 @@ function List({ tab }) {
                   );
                 } else {
                   // POST
-                  await fetch(`${API_URL}cliente_informacion`, {
+                  await fetch(`${API_URL}clienteinformacion`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(infoBody),
@@ -336,14 +336,14 @@ function List({ tab }) {
                   telefono: editForm.telefono,
                   direccion: editForm.direccion,
                   observacion: editForm.observacion,
-                  tipo_documento: tipoDocumentos.find(
-                    (t) => t.id === Number(editForm.tipo_documento)
+                  tipodocumento: tipoDocumentos.find(
+                    (t) => t.id === Number(editForm.tipodocumento)
                   ),
                   ciudad: ciudades.find(
                     (c) => c.id === Number(editForm.ciudad)
                   ),
-                  cliente_estado: estadoClientes.find(
-                    (e) => e.id === Number(editForm.cliente_estado)
+                  clienteEstado: estadoClientes.find(
+                    (e) => e.id === Number(editForm.clienteEstado)
                   ),
                 },
               }));
@@ -387,8 +387,8 @@ function List({ tab }) {
   // abrir modal de confirmación (habilitar o deshabilitar)
   const handleDisableClick = (cliente) => {
     const esInactivo =
-      cliente.cliente_estado?.id === 6 ||
-      cliente.cliente_estado?.descripcion?.toLowerCase() === "inactivo";
+      cliente.clienteEstado?.id === 5 ||
+      cliente.clienteEstado?.descripcion?.toLowerCase() === "inactivo";
 
     setState({
       alert: (
@@ -406,16 +406,16 @@ function List({ tab }) {
           }
           onConfirm={async () => {
             try {
-              const nuevoEstadoId = esInactivo ? 5 : 6; // 5 = Activo, 6 = Inactivo
+              const nuevoEstadoId = esInactivo ? 3 : 5; // 5 = Activo, 6 = Inactivo
 
               const response = await fetch(`${API_URL}cliente/${cliente.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   ...cliente,
-                  tipo_documento: { id: cliente.tipo_documento.id },
+                  tipodocumento: { id: cliente.tipodocumento.id },
                   ciudad: { id: cliente.ciudad.id },
-                  cliente_estado: { id: nuevoEstadoId },
+                  clienteestado: { id: nuevoEstadoId },
                 }),
               });
 
@@ -511,7 +511,7 @@ function List({ tab }) {
       if (!estadoFiltro) return true;
       // estado viene como objeto
       return (
-        item.cliente_estado?.descripcion?.toLowerCase() ===
+        item.clienteestado?.descripcion?.toLowerCase() ===
         estadoFiltro.toLowerCase()
       );
     });
@@ -533,7 +533,7 @@ function List({ tab }) {
     },
     {
       name: "Estado",
-      selector: (row) => row.cliente_estado?.descripcion,
+      selector: (row) => row.clienteEstado?.descripcion,
       sortable: true,
     },
     {
@@ -559,7 +559,7 @@ function List({ tab }) {
             style={{
               marginLeft: "5px",
               background:
-                row.cliente_estado?.id === 6
+                row.clienteEstado?.id === 5
                   ? "#58AB01"
                   : "linear-gradient(90deg, #ff4d4d 0%, #cc0000 100%)",
               border: "none",
@@ -569,7 +569,7 @@ function List({ tab }) {
             }}
             onClick={() => handleDisableClick(row)}
           >
-            {row.cliente_estado?.id === 6 ? "Habilitar" : "Deshabilitar"}
+            {row.clienteestado?.id === 6 ? "Habilitar" : "Deshabilitar"}
           </Button>
         </>
       ),
@@ -677,7 +677,7 @@ function List({ tab }) {
                       }}
                     >
                       <FaPlus style={{ marginRight: "8px" }} />
-                      Agregar Cliente
+                     Agregar
                     </Button>
                   </div>
                 </div>
@@ -730,8 +730,8 @@ function List({ tab }) {
       {/* Modal de agregar cliente */}
       <Modal isOpen={modalOpen} toggle={toggleModal} size="lg">
         <div
-          style={{
-            backgroundColor: "rgba(235, 235, 235, 0.7)",
+        style={{
+            backgroundColor: "hsla(0, 100%, 98%, 1.00)",
             borderRadius: "2rem",
             boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
             padding: "20px",
@@ -740,7 +740,7 @@ function List({ tab }) {
             border: "none",
           }}
         >
-          <ModalHeader toggle={toggleModal}>Agregar Cliente</ModalHeader>
+          <ModalHeader toggle={toggleModal}>Cliente</ModalHeader>
           <ModalBody>
             <Row>
               <Col md="6">
@@ -900,6 +900,7 @@ function List({ tab }) {
         isOpen={detailModalOpen}
         toggle={() => setDetailModalOpen(false)}
         size="lg"
+        
       >
         <ModalHeader toggle={() => setDetailModalOpen(false)}>
           Detalles del Cliente
@@ -925,7 +926,7 @@ function List({ tab }) {
                     </Col>
                     <Col md="6">
                       <strong>Tipo Documento:</strong>{" "}
-                      {selectedClient.tipo_documento?.descripcion}
+                      {selectedClient.tipoDocumento?.descripcion}
                     </Col>
                     <Col md="6">
                       <strong>Teléfono:</strong> {selectedClient.telefono}
@@ -942,7 +943,7 @@ function List({ tab }) {
                     </Col>
                     <Col md="6">
                       <strong>Estado:</strong>{" "}
-                      {selectedClient.cliente_estado?.descripcion}
+                      {selectedClient.clienteEstado?.descripcion}
                     </Col>
                     <Col md="12" className="mt-3">
                       <strong>Observaciones:</strong> <br />
@@ -952,7 +953,7 @@ function List({ tab }) {
 
                   <hr />
                   <h5 className="mt-3">
-                    Información de cliente (cliente_informacion)
+                    Información de cliente (clienteinformacion)
                   </h5>
                   <Row>
                     <Col md="6">
@@ -961,7 +962,7 @@ function List({ tab }) {
                     </Col>
                     <Col md="6">
                       <strong>Tipo de cliente:</strong>{" "}
-                      {clienteInfo?.cliente_tipo?.descripcion || "N/A"}
+                      {clienteInfo?.tipocliente?.descripcion || "N/A"}
                     </Col>
                     <Col md="6">
                       <strong>Vendedor:</strong>{" "}
@@ -969,7 +970,7 @@ function List({ tab }) {
                     </Col>
                     <Col md="6">
                       <strong>Lista de precio:</strong>{" "}
-                      {clienteInfo?.lista_precio?.descripcion || "N/A"}
+                      {clienteInfo?.listaprecio?.descripcion || "N/A"}
                     </Col>
                   </Row>
                 </>
@@ -981,11 +982,11 @@ function List({ tab }) {
                       <Label>Tipo de documento</Label>
                       <Input
                         type="select"
-                        value={editForm.tipo_documento}
+                        value={editForm.tipodocumento}
                         onChange={(e) =>
                           setEditForm((p) => ({
                             ...p,
-                            tipo_documento: e.target.value,
+                            tipodocumento: e.target.value,
                           }))
                         }
                       >
@@ -1081,11 +1082,11 @@ function List({ tab }) {
                       <Label>Estado</Label>
                       <Input
                         type="select"
-                        value={editForm.cliente_estado}
+                        value={editForm.clienteEstado}
                         onChange={(e) =>
                           setEditForm((p) => ({
                             ...p,
-                            cliente_estado: e.target.value,
+                            clienteestado: e.target.value,
                           }))
                         }
                       >
@@ -1140,11 +1141,11 @@ function List({ tab }) {
                       <Label>Tipo de cliente</Label>
                       <Input
                         type="select"
-                        value={editInfoForm.cliente_tipo}
+                        value={editInfoForm.tipocliente}
                         onChange={(e) =>
                           setEditInfoForm((p) => ({
                             ...p,
-                            cliente_tipo: e.target.value,
+                            tipocliente: e.target.value,
                           }))
                         }
                       >
@@ -1180,11 +1181,11 @@ function List({ tab }) {
                       <Label>Lista de precio</Label>
                       <Input
                         type="select"
-                        value={editInfoForm.lista_precio}
+                        value={editInfoForm.listaprecio}
                         onChange={(e) =>
                           setEditInfoForm((p) => ({
                             ...p,
-                            lista_precio: e.target.value,
+                            listaprecio: e.target.value,
                           }))
                         }
                       >
@@ -1209,7 +1210,14 @@ function List({ tab }) {
             <Button
               color="primary"
               onClick={() => setEditMode(true)}
-              style={{ borderRadius: "20px" }}
+                 style={{
+                background: "linear-gradient(90deg, #84C63B 0%, #58AB01 100%)",
+                border: "none",
+                borderRadius: "20px",
+                color: "#fff",
+                fontWeight: "600",
+                padding: "12px 20px",
+              }}
             >
               Editar
             </Button>
@@ -1218,7 +1226,14 @@ function List({ tab }) {
             <Button
               color="success"
               onClick={handleSaveEdit}
-              style={{ borderRadius: "20px" }}
+                style={{
+                background: "linear-gradient(90deg, #84C63B 0%, #58AB01 100%)",
+                border: "none",
+                borderRadius: "20px",
+                color: "#fff",
+                fontWeight: "600",
+                padding: "12px 20px",
+              }}
             >
               Guardar
             </Button>
@@ -1229,7 +1244,14 @@ function List({ tab }) {
               setDetailModalOpen(false);
               setEditMode(false);
             }}
-            style={{ borderRadius: "20px" }}
+               style={{
+                backgroundColor: "red",
+                border: "none",
+                borderRadius: "20px",
+                color: "#fff",
+                fontWeight: "600",
+                padding: "12px 20px",
+              }}
           >
             Cerrar
           </Button>

@@ -65,6 +65,7 @@ const AuthFooter = () => {
           {puntosDeVenta.map((punto, index) => (
             <Col md="4" sm="12" key={index} className="mb-3">
               <h5 style={{ color: "#58AB01", fontWeight: "bold", fontSize: "17px"}}>{punto.nombre}</h5>
+              <div style={{textAlign: "left"}}>
               <p className="text-muted mb-1">
                 <strong style={{fontWeight: "800"}}>Ubicación:</strong> {punto.ubicacion}
               </p>
@@ -74,6 +75,7 @@ const AuthFooter = () => {
               <p className="text-muted mb-0">
                 <strong style={{fontWeight: "800"}}>Celular:</strong> {punto.celular}
               </p>
+              </div>
             </Col>
           ))}
         </Row>

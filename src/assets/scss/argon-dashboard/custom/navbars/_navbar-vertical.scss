@@ -56,11 +56,11 @@
             padding-left: $navbar-padding-x;
             padding-right: $navbar-padding-x;
 
-            &:before {
-                content: '';
-                display: block;
-                margin: $navbar-padding-y (-$navbar-padding-x);
-            }
+            // &:before {
+            //     content: '';
+            //     display: block;
+            //     margin: $navbar-padding-y (-$navbar-padding-x);
+            // }
         }
     }
 
@@ -271,7 +271,7 @@
                     }
 
                     .navbar-brand-img {
-                        max-height: 2.5rem;
+                        max-height: 150px;
                     }
 
                     // 🎯 CUSTOM LOGO STYLING EXPANDED

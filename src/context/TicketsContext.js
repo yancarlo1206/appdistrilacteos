@@ -1,200 +1,82 @@
-import { helpHttp } from "helpers/helpHttp";
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
-import { TYPES } from "actions/genericAction";
-import {
-  genericReducer,
-  genericInitialState,
-} from "../reducers/genericReducer";
-import NotificationContext from "context/NotificationContext";
-import LoadingContext from "context/LoadingContext";
-import { useNavigate } from "react-router";
+// src/context/TicketsContext.js
+
+import { createContext, useState } from "react";
+import { useEffect } from "react";
 
 const TicketsContext = createContext();
 
-const TicketsProvider = ({ children }) => {
-  const [toDetail, setToDetail] = useState();
-  const [toUpdate, setToUpdate] = useState();
-  const [detail, setDetail] = useState({});
-  const [module, setModule] = useState();
-
-
-  const navigate = useNavigate();
-  const { REACT_APP_API_URL } = process.env;
-
-  const { setMessage, setStatus, setType } = useContext(NotificationContext);
-  const { setLoading } = useContext(LoadingContext);
-
-  const [state, dispatch] = useReducer(genericReducer, genericInitialState);
-  const { db } = state;
-
-  let api = helpHttp();
-  let url = REACT_APP_API_URL + "tickets";
+export const TicketsProvider = ({ children }) => {
+  const [tickets, setTickets] = useState([]);
+  const [estadoTickets, setEstadoTickets] = useState([]);
+  const [prioridadTickets, setPrioridadTickets] = useState([]);
+  const [tipoTickets, setTipoTickets] = useState([]);
 
   useEffect(() => {
-    
-    /*fetchData();
-    fetchDataCiudades();
-    fetchDataTipoDocumentos();
-    fetchDataEstadoClientes();*/
+    const fetchData = async () => {
+      try {
+        const ticketsRes = await fetch(`${process.env.REACT_APP_API_URL}ticket`);
+        const estadoRes = await fetch(`${process.env.REACT_APP_API_URL}estadoTicket`);
+        const prioridadRes = await fetch(`${process.env.REACT_APP_API_URL}prioridadTicket`);
+        const tipoRes = await fetch(`${process.env.REACT_APP_API_URL}tipoTicket`);
+
+        const ticketsData = await ticketsRes.json();
+        const estadoData = await estadoRes.json();
+        const prioridadData = await prioridadRes.json();
+        const tipoData = await tipoRes.json();
+
+        setTickets(ticketsData.data);
+        setEstadoTickets(estadoData.data);
+        setPrioridadTickets(prioridadData.data);
+        setTipoTickets(tipoData.data);
+      } catch (err) {
+        console.error("Error al cargar datos de tickets:", err);
+      }
+    };
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    if (toUpdate && toUpdate != 0) {
-      fetchDataDetail();
+  const deleteData = async (id) => {
+    try {
+      await fetch(`${process.env.REACT_APP_API_URL}ticket/${id}`, {
+        method: "DELETE",
+      });
+      setTickets(tickets.filter((ticket) => ticket.id !== id));
+    } catch (err) {
+      console.error("Error al eliminar el ticket:", err);
     }
-  }, [toUpdate]);
-
-  const fetchData = () => {
-    setLoading(true);
-    api.get(url).then((res) => {
-      if (!res.err) {
-        dispatch({ type: TYPES.READ_ALL_DATA, payload: res.data });
-      } else {
-        dispatch({ type: TYPES.NO_DATA });
-      }
-      setLoading(false);
-    });
-  };
- 
-
-  const fetchDataDetail = () => {
-    setLoading(true);
-    url = url + "/" + toUpdate;
-    api.get(url).then((res) => {
-      setDetail(res.data);
-      setLoading(false);
-    });
   };
 
-/*const fetchDataCiudades = () => {
-        let urlFetch = REACT_APP_API_URL+"ciudad";
-        api.get(urlFetch).then((res) => {
-            var data = res.data.map(function (obj) {
-                obj.text = obj.text || obj.descripcion;
-                return obj;
-            });
-            setCiudades(data);
-        });
-    };
+  const saveData = async (ticket) => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}ticket`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(ticket),
+      });
 
-    const fetchDataTipoDocumentos = () => {
-        let urlFetch = REACT_APP_API_URL+"tipo_documento";
-        api.get(urlFetch).then((res) => {
-            var data = res.data.map(function (obj) {
-                obj.text = obj.text || obj.descripcion;
-                return obj;
-            });
-            setTipoDocumentos(data);
-        });
-    };
-
-
-    const fetchDataEstadoClientes = () => {
-        let urlFetch = REACT_APP_API_URL+"cliente_estado";
-        api.get(urlFetch).then((res) => {
-            var data = res.data.map(function (obj) {
-                obj.text = obj.text || obj.descripcion;
-                return obj;
-            });
-            setEstadoClientes(data);
-        });
-    };*/
-
-
-
-  const saveData = (data) => {
-    setLoading(true);
-    let endpoint = url;
-    let newData = data;
-    delete newData.id;
-    let options = {
-      body: newData,
-      headers: { "content-type": "application/json" },
-    };
-    api.post(endpoint, options).then((res) => {
-      if (!res.err) {
-        dispatch({ type: TYPES.CREATE_DATA, payload: res.data });
-        navigate("/admin/tickets/");
-        setType("success");
-        setMessage("The registry was updated correctly");
-        setStatus(1);
-      } else {
-      }
-      setLoading(false);
-    });
-  };
-
-  const updateData = (data) => {
-    setLoading(true);
-    let endpoint = url + "/" + data.id;
-    let newData = data;
-    delete newData.id;
-    let options = {
-      body: newData,
-      headers: { "content-type": "application/json" },
-    };
-    api.put(endpoint, options).then((res) => {
-      if (!res.err) {
-        setDetail(res.data);
-        dispatch({ type: TYPES.UPDATE_DATA, payload: res.data });
-        navigate("/admin/tickets");
-        setType("success");
-        setMessage("The registry was updated correctly");
-        setStatus(1);
-      } else {
-      }
-      setLoading(false);
-    });
-  };
-
-  const deleteData = (id) => {
-    setLoading(true);
-    let endpoint = url + "/" + id;
-    let options = {
-      body: "",
-      headers: { "content-type": "application/json" },
-    };
-    api.del(endpoint, options).then((res) => {
-      if (!res.err) {
-        dispatch({ type: TYPES.DELETE_DATA, payload: id });
-        setType("success");
-        setMessage("The registry was deleted correctly");
-        setStatus(1);
-      } else {
-        setType("danger");
-        setMessage(res.message.message);
-        setStatus(1);
-      }
-      setLoading(false);
-    });
-  };
-
-  const data = {
-    db,
-    detail,
-    setToDetail,
-    setToUpdate,
-    updateData,
-    saveData,
-    deleteData,
-    module,
-    setModule,
-    setDetail,
-    /*ciudades,
-    tipoDocumentos,
-    estadoClientes,*/
+      const newTicket = await res.json();
+      setTickets((prev) => [...prev, newTicket]);
+    } catch (err) {
+      console.error("Error al guardar el ticket:", err);
+    }
   };
 
   return (
-    <TicketsContext.Provider value={data}>{children}</TicketsContext.Provider>
+    <TicketsContext.Provider
+      value={{
+        tickets,
+        estadoTickets,
+        prioridadTickets,
+        tipoTickets,
+        deleteData,
+        saveData,
+      }}
+    >
+      {children}
+    </TicketsContext.Provider>
   );
 };
 
-export { TicketsProvider };
 export default TicketsContext;
