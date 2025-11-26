@@ -71,6 +71,7 @@ const Sidebar = (props) => {
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (routes) => {
     return routes.map((prop, key) => {
+      if (!prop.invisible) {
       return (
         <NavItem key={key}>
           <NavLink
@@ -83,6 +84,7 @@ const Sidebar = (props) => {
           </NavLink>
         </NavItem>
       );
+      }
     });
   };
 

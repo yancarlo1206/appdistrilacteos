@@ -16,15 +16,8 @@
 
 */
 import Index from "views/Index.js";
-//import Login from "views/examples/Login.js";
 import Login from "views/pages/login/Login.jsx";
-import Proveedor from "views/pages/proveedor/Index";
-import Caracteristica from "views/pages/caracteristica/Index";
-import Categoria from "views/pages/categoria/Index";
 import Cliente from "views/pages/cliente/Index";
-import Articulo from "views/pages/articulo/Index";
-import Compra from "views/pages/compra/Index";
-import Venta from "views/pages/venta/Index";
 import Tickets from "views/pages/tickets/Index";
 import FormularioCliente from "views/pages/FormularioCliente.js";
 import Aceptar from "views/pages/aceptar/index.js";
@@ -37,28 +30,7 @@ var routes = [
     component: <Index />,
     layout: "/admin",
   },
-  /*{
-    path: "/venta",
-    name: "Venta",
-    icon: "ni ni-cart text-success",
-    component: <Venta />,
-    layout: "/admin",
-  },
   {
-    path: "/compra",
-    name: "Compra",
-    icon: "ni ni-cart text-success",
-    component: <Compra />,
-    layout: "/admin",
-  },*/
-  // {
-  //   path: "/articulo",
-  //   name: "Articulo",
-  //   icon: "ni ni-tag text-success",
-  //   component: <Articulo />,
-  //   layout: "/admin",
-  // },
-   {
     path: "/cliente",
     name: "Cliente",
     icon: "ni ni-user-run text-primary",
@@ -77,36 +49,16 @@ var routes = [
     name: "Registro Cliente",
     icon: "ni ni-single-02 text-yellow",
     component: <FormularioCliente />,
-    layout: "/auth"
-},
-  /*{
-    path: "/proveedor",
-    name: "Proveedor",
-    icon: "ni ni-delivery-fast text-primary",
-    component: <Proveedor />,
-    layout: "/admin",
+    layout: "/auth",
+    invisible: true
   },
- 
-  {
-    path: "/caracteristica",
-    name: "Caracteristica",
-    icon: "ni ni-collection text-primary",
-    component: <Caracteristica />,
-    layout: "/admin",
-  },
-  {
-    path: "/categoria",
-    name: "Categoria",
-    icon: "ni ni-books text-primary",
-    component: <Categoria />,
-    layout: "/admin",
-  },*/
   {
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
     component: <Login />,
     layout: "/auth",
+    invisible: true
   },
   {
     path: "/aceptar",

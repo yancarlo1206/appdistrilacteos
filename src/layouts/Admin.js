@@ -23,6 +23,8 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import Header from "components/Headers/Header.js"; // 👈 Importa tu Header de notificaciones
 import { InternetConnectionProvider } from "context/InternetConnectionContext";
+
+import { useAuth } from "../hooks/useAuth";
 import routes from "routes.js";
 
 const Admin = (props) => {
@@ -35,16 +37,20 @@ const Admin = (props) => {
     mainContent.current.scrollTop = 0;
   }, [location]);
 
+  const { isAuthenticated } = useAuth();
+
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
-        return (
-          <Route 
-            path={`${prop.path}/*`} 
-            element={prop.component} 
-            key={key} 
-          />
-        );
+        if (isAuthenticated()) {
+          return (
+            <Route 
+              path={`${prop.path}/*`} 
+              element={prop.component} 
+              key={key} 
+            />
+          );
+        }
       } else {
         return null;
       }
@@ -70,7 +76,7 @@ const Admin = (props) => {
         routes={routes}
         logo={{
           innerLink: "/admin/index",
-          imgSrc: require("assets/img/icons/vaca.png"),
+          imgSrc: require("assets/img/icons/logo_letras_negras.png"),
           imgAlt: "...",
           // Ajusta este style para cambiar el tamaño del logo en el sidebar
           className: "sidebar-logo"
@@ -83,10 +89,12 @@ const Admin = (props) => {
             brandText={getBrandText(props?.location?.pathname)}
           />
           <Header /> {/* 👈 AQUÍ insertas tu Header con la campana */}
+      
           <Routes>
-            {getRoutes(routes)}
-            <Route path="*" element={<Navigate to="/admin/index" replace />} />
+            {isAuthenticated() ? getRoutes(routes) : ""}
+            <Route path="*" element={<Navigate to="/auth/login" replace />} />
           </Routes>
+          
           <Container fluid>
             <AdminFooter />
           </Container>

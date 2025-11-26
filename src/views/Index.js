@@ -444,11 +444,11 @@ const Index = () => {
               </CardBody>
             </Card>
           </Col>
-        </Row>
+        
 
         {/* ===== CLIENTES ===== */}
-        <Row className="mt-5">
-          <Col xl="8">
+        
+          <Col xl="6">
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
