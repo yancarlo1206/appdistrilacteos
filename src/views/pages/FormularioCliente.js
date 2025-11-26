@@ -74,7 +74,7 @@ function FormularioCliente() {
     const fetchData = async () => {
       try {
         const [documentoRes, ciudadRes] = await Promise.all([
-          fetch(`${API_URL}tipo_documento`).then((res) => res.json()),
+          fetch(`${API_URL}tipodocumento`).then((res) => res.json()),
           fetch(`${API_URL}ciudad`).then((res) => res.json()),
         ]);
 
@@ -104,16 +104,14 @@ function FormularioCliente() {
       setAlert(
         <ReactBSAlert
           warning
-          style={{
-            animation: "shake 0.3s ease-in-out",
-            backgroundColor: "rgba(235, 235, 235, 0.7)",
-            borderRadius: "2rem",
-            boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
-            padding: "20px",
-            backdropFilter: "blur(6px)",
-            transform: "translateY(-10px)",
-            border: "none",
-          }}
+        style={{
+          animation: "shake 0.3s ease-in-out",
+          backgroundColor: "hsla(0, 100%, 98%, 1.00)",
+          borderRadius: "2rem",
+          boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
+          padding: "20px",
+          border: "none",
+        }}
           title={
             <span
               style={{ fontSize: "22px", fontWeight: "700", color: "#d68910" }}
@@ -138,12 +136,10 @@ function FormularioCliente() {
         info
         style={{
           animation: "shake 0.3s ease-in-out",
-          backgroundColor: "rgba(235, 235, 235, 0.7)",
+          backgroundColor: "hsla(0, 100%, 98%, 1.00)",
           borderRadius: "2rem",
           boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
           padding: "20px",
-          backdropFilter: "blur(6px)",
-          transform: "translateY(-10px)",
           border: "none",
         }}
         className="alert-custom-container"
@@ -182,16 +178,14 @@ function FormularioCliente() {
         setAlert(
           <ReactBSAlert
             warning
-            style={{
-              animation: "shake 0.3s ease-in-out",
-              backgroundColor: "rgba(235, 235, 235, 0.7)",
-              borderRadius: "2rem",
-              boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
-              padding: "20px",
-              backdropFilter: "blur(6px)",
-              transform: "translateY(-10px)",
-              border: "none",
-            }}
+             style={{
+          animation: "shake 0.3s ease-in-out",
+          backgroundColor: "hsla(0, 100%, 98%, 1.00)",
+          borderRadius: "2rem",
+          boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
+          padding: "20px",
+          border: "none",
+        }}
             title={
               <span
                 style={{
@@ -218,7 +212,7 @@ function FormularioCliente() {
 
       // ✅ Crear cuerpo con estado "En proceso" (id = 1)
       const body = {
-        tipo_documento: { id: parseInt(formData.tipoDocumento) },
+        tipodocumento: { id: parseInt(formData.tipoDocumento) },
         documento: formData.documento,
         nombre: formData.nombre,
         telefono: formData.telefono,
@@ -226,7 +220,7 @@ function FormularioCliente() {
         correo: formData.correo,
         ciudad: { id: parseInt(formData.ciudad) },
         observacion: formData.observacion,
-        cliente_estado: { id: 1 }, // Estado fijo "En proceso"
+        clienteestado: { id: 1 }, // Estado fijo "En proceso"
       };
 
       // console.log(" Enviando cliente:", JSON.stringify(body, null, 2));
@@ -256,16 +250,14 @@ function FormularioCliente() {
             // className="alert-custom-container"
             confirmBtnText="Entendido"
             confirmBtnCssClass="alert-btn-confirm"
-            style={{
-              animation: "shake 0.3s ease-in-out",
-              backgroundColor: "rgba(235, 235, 235, 0.7)",
-              borderRadius: "2rem",
-              boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
-              padding: "20px",
-              backdropFilter: "blur(6px)",
-              transform: "translateY(-10px)",
-              border: "none",
-            }}
+             style={{
+          animation: "shake 0.3s ease-in-out",
+          backgroundColor: "hsla(0, 100%, 98%, 1.00)",
+          borderRadius: "2rem",
+          boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
+          padding: "20px",
+          border: "none",
+        }}
             title={
               <span
                 style={{
@@ -298,15 +290,13 @@ function FormularioCliente() {
            <ReactBSAlert
           danger
           style={{
-            animation: "shake 0.3s ease-in-out",
-            backgroundColor: "rgba(235, 235, 235, 0.7)",
-            borderRadius: "2rem",
-            boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
-            padding: "20px",
-            backdropFilter: "blur(6px)",
-            transform: "translateY(-10px)",
-            border: "none",
-          }}
+          animation: "shake 0.3s ease-in-out",
+          backgroundColor: "hsla(0, 100%, 98%, 1.00)",
+          borderRadius: "2rem",
+          boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
+          padding: "20px",
+          border: "none",
+        }}
           title={
             <span
               style={{ fontSize: "22px", fontWeight: "700", color: "red" }}
@@ -357,16 +347,14 @@ function FormularioCliente() {
       setAlert(
         <ReactBSAlert
             danger
-            style={{
-              animation: "shake 0.3s ease-in-out",
-              backgroundColor: "rgba(235, 235, 235, 0.7)",
-              borderRadius: "2rem",
-              boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
-              padding: "20px",
-              backdropFilter: "blur(6px)",
-              transform: "translateY(-10px)",
-              border: "none",
-            }}
+         style={{
+          animation: "shake 0.3s ease-in-out",
+          backgroundColor: "hsla(0, 100%, 98%, 1.00)",
+          borderRadius: "2rem",
+          boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
+          padding: "20px",
+          border: "none",
+        }}
             title={
               <span
                 style={{
@@ -742,8 +730,8 @@ function FormularioCliente() {
         className=" shadow border-0"
       >
         <div
-          style={{
-            backgroundColor: "rgba(235, 235, 235, 0.7)",
+           style={{
+            backgroundColor: "hsla(0, 100%, 98%, 1.00)",
             borderRadius: "2rem",
             boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
             padding: "20px",
@@ -751,8 +739,9 @@ function FormularioCliente() {
             transform: "translateY(-10px)",
             border: "none",
           }}
+
         >
-          <ModalHeader toggle={toggleModalEstado}>Consultar Estado</ModalHeader>
+          <ModalHeader toggle={toggleModalEstado} >Consultar Estado</ModalHeader>
           <ModalBody>
             {/* TIPO DE DOCUMENTO */}
             <FormGroup style={fieldContainer}>
@@ -983,7 +972,7 @@ function FormularioCliente() {
           <Card
             className="shadow"
             style={{
-              backgroundColor: "rgba(235, 235, 235, 0.7)",
+              backgroundColor: "#ffffffff",
               borderRadius: "2rem",
               boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
               padding: "20px",
@@ -1137,11 +1126,11 @@ function FormularioCliente() {
 
                   <Button
                     onClick={toggleModalEstado}
-                    style={{
-                      backgroundColor: "#EBEBEB",
+                      style={{
+                      backgroundColor: "hsla(0, 0%, 52%, 1.00)",
                       border: "none",
                       borderRadius: "20px",
-                      color: "#84C63B",
+                      color: "#000000ff",
                       fontWeight: "600",
                       padding: "12px 20px",
                       boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
@@ -1155,6 +1144,8 @@ function FormularioCliente() {
           </Card>
         </Col>
       </Row>
+      
+      
     </Container>
   );
 }

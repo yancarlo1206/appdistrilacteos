@@ -90,12 +90,13 @@ const ListAceptacion = () => {
     try {
       const [zRes, tRes, vRes, lRes, tdRes, cRes] = await Promise.all([
         fetch(`${API_URL}zona`),
-        fetch(`${API_URL}cliente_tipo`),
+        fetch(`${API_URL}tipocliente`),
         fetch(`${API_URL}vendedor`),
-        fetch(`${API_URL}lista_precio`),
-        fetch(`${API_URL}tipo_documento`),
+        fetch(`${API_URL}listaprecio`),
+        fetch(`${API_URL}tipoDocumento`),
         fetch(`${API_URL}ciudad`),
       ]);
+       console.log("Zonas:", z);
       const [z, t, v, l, td, c] = await Promise.all([
         zRes.json(),
         tRes.json(),
@@ -146,7 +147,7 @@ const ListAceptacion = () => {
   const handleGuardarAceptacion = async () => {
     // Validación campos obligatorios
     const camposCliente = [
-      "tipo_documento",
+      "tipoDocumento",
       "documento",
       "nombre",
       "correo",
@@ -204,12 +205,12 @@ const ListAceptacion = () => {
               correo: selectedClient.correo,
               telefono: selectedClient.telefono,
               direccion: selectedClient.direccion,
-              tipo_documento: {
+              tipoDocumento: {
                 id: Number(
-                  selectedClient.tipo_documento?.id ||
-                    selectedClient.tipo_documento
+                  selectedClient.tipoDocumento?.id ||
+                    selectedClient.tipoDocumento
                 ),
-                descripcion: selectedClient.tipo_documento?.descripcion || "",
+                descripcion: selectedClient.tipoDocumento?.descripcion || "",
               },
               ciudad: {
                 id: Number(selectedClient.ciudad?.id || selectedClient.ciudad),
@@ -232,10 +233,10 @@ const ListAceptacion = () => {
                   correo: selectedClient.correo,
                   telefono: selectedClient.telefono,
                   direccion: selectedClient.direccion,
-                  tipo_documento: {
+                  tipoDocumento: {
                     id: Number(
-                      selectedClient.tipo_documento?.id ||
-                        selectedClient.tipo_documento
+                      selectedClient.tipoDocumento?.id ||
+                        selectedClient.tipoDocumento
                     ),
                   },
                   ciudad: {
@@ -244,7 +245,7 @@ const ListAceptacion = () => {
                     ),
                   },
                   observacion: selectedClient.observacion || "",
-                  cliente_estado: { id: 3 }, // 👈 AGREGA ESTO
+                  clienteestado: { id: 3 }, // 👈 AGREGA ESTO
                 }),
               }
             );
@@ -255,16 +256,16 @@ const ListAceptacion = () => {
               throw new Error("Error al actualizar cliente");
             }
 
-            // 2️⃣ Guardar datos extra en cliente_informacion
-            await fetch(`${API_URL}cliente_informacion`, {
+            // 2️⃣ Guardar datos extra en cliente informacion
+            await fetch(`${API_URL}clienteinformacion`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 cliente: { id: selectedClient.id },
                 zona: { id: formExtra.zona },
-                cliente_tipo: { id: formExtra.tipo },
+                tipocliente: { id: formExtra.tipo },
                 vendedor: { id: formExtra.vendedor },
-                lista_precio: { id: formExtra.listaPrecios },
+                listaprecio: { id: formExtra.listaPrecios },
                 usuario: formExtra.usuario,
                 password: formExtra.password,
               }),
@@ -367,10 +368,10 @@ const ListAceptacion = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    // Si el cambio viene de los select de tipo_documento o ciudad
-    if (name === "tipo_documento") {
+    // Si el cambio viene de los select de tipo documento o ciudad
+    if (name === "tipoDocumento") {
       const tipo = tiposDocumentoDB.find((t) => t.id === Number(value));
-      setSelectedClient((prev) => ({ ...prev, tipo_documento: tipo }));
+      setSelectedClient((prev) => ({ ...prev, tipoDocumento: tipo }));
     } else if (name === "ciudad") {
       const ciudad = ciudadesDB.find((c) => c.id === Number(value));
       setSelectedClient((prev) => ({ ...prev, ciudad }));
@@ -388,13 +389,12 @@ const ListAceptacion = () => {
   const columns = [
     {
       name: "Tipo Documento",
-      selector: (row) => row.tipo_documento?.descripcion,
+      selector: (row) => row.tipoDocumento?.descripcion,
     },
     { name: "Documento", selector: (row) => row.documento },
     { name: "Nombre", selector: (row) => row.nombre },
     { name: "Correo", selector: (row) => row.correo },
     { name: "Teléfono", selector: (row) => row.telefono },
-    { name: "Dirección", selector: (row) => row.direccion },
     {
       name: "Ciudad",
       selector: (row) => row.ciudad?.descripcion || "—",
@@ -409,6 +409,7 @@ const ListAceptacion = () => {
             background: "linear-gradient(90deg, #84C63B 0%, #58AB01 100%)",
             border: "none",
             borderRadius: "10px",
+            color: "#fff",
           }}
           onClick={() => handleRevisar(row)}
         >
@@ -480,7 +481,7 @@ const ListAceptacion = () => {
                   </Col>
                   <Col md="6">
                     <strong>Tipo Documento:</strong>{" "}
-                    {selectedClient.tipo_documento?.descripcion}
+                    {selectedClient.tipoDocumento?.descripcion}
                   </Col>
                   <Col md="6">
                     <strong>Nombre:</strong> {selectedClient.nombre}
@@ -525,8 +526,8 @@ const ListAceptacion = () => {
                       <Label>Tipo Documento</Label>
                       <Input
                         type="select"
-                        name="tipo_documento"
-                        value={selectedClient.tipo_documento?.id || ""}
+                        name="tipoDocumento"
+                        value={selectedClient.tipoDocumento?.id || ""}
                         onChange={handleInputChange}
                       >
                         <option value="">Seleccionar...</option>
@@ -719,7 +720,7 @@ const ListAceptacion = () => {
                         border: "none",
                       }}
                     >
-                      Guardar y Aceptar
+                      Guardar
                     </Button>
                   </div>
                 </>
@@ -768,43 +769,43 @@ const ListAceptacion = () => {
               )}
 
               {/* Botones principales */}
-              {!mostrarCamposExtra && !mostrarCampoRechazo && (
+             
+            </>
+          )}
+        </ModalBody>
+        <ModalFooter>
+           {!mostrarCamposExtra && !mostrarCampoRechazo && (
                 <div className="d-flex justify-content-end mt-4">
                   <Button
                     color="success"
                     onClick={handleAprobar}
-                    style={{ borderRadius: "10px", padding: "10px 20px" }}
+                     style={{
+                background: "linear-gradient(90deg, #84C63B 0%, #58AB01 100%)",
+                border: "none",
+                borderRadius: "20px",
+                color: "#fff",
+                fontWeight: "600",
+                padding: "12px 20px",
+              }}
                   >
                     Aprobar
                   </Button>
                   <Button
                     color="danger"
                     onClick={handleRechazar}
-                    style={{
-                      borderRadius: "10px",
-                      padding: "10px 20px",
-                      marginLeft: "10px",
-                    }}
+                       style={{
+                backgroundColor: "red",
+                border: "none",
+                borderRadius: "20px",
+                color: "#fff",
+                fontWeight: "600",
+                padding: "12px 20px",
+              }}
                   >
                     Rechazar
                   </Button>
                 </div>
               )}
-            </>
-          )}
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            color="secondary"
-            onClick={() => {
-              setModalDetalle(false);
-              setMostrarCamposExtra(false);
-              setMostrarCampoRechazo(false);
-            }}
-            style={{ borderRadius: "20px" }}
-          >
-            Cerrar
-          </Button>
         </ModalFooter>
       </Modal>
     </>

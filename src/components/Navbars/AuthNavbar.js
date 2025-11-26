@@ -34,8 +34,8 @@ const AdminNavbar = () => {
 
   return (
     <>
-      <Navbar className="navbar-top navbar-horizontal navbar-dark" expand="md">
-        <Container className="px-4">
+      {/* <Navbar className="navbar-top navbar-horizontal navbar-dark" expand="md">
+        <Container className="px-4"> */}
           {/* <NavbarBrand to="/" tag={Link}>
             <img
               alt="..."
@@ -43,12 +43,12 @@ const AdminNavbar = () => {
             />
           </NavbarBrand> */}
 
-          <button className="navbar-toggler" id="navbar-collapse-main">
+          {/* <button className="navbar-toggler" id="navbar-collapse-main">
             <span className="navbar-toggler-icon" />
           </button>
 
-          <UncontrolledCollapse navbar toggler="#navbar-collapse-main"
-    //       style={{ position: "fixed",
+          <UncontrolledCollapse navbar toggler="#navbar-collapse-main" */}
+{/* style={{ position: "fixed", 
     // top: 0,
     // right: 0,
     // width: "50vw", // 50% del ancho de la pantalla
@@ -60,16 +60,16 @@ const AdminNavbar = () => {
     // overflowY: "auto",
     // transition: "all 0.4s ease"}}>
     >
-            <div className="navbar-collapse-header d-md-none">
+            {/* <div className="navbar-collapse-header d-md-none">
               <Row>
                 <Col className="collapse-brand" xs="6">
                   <Link to="/">
-                  <h3>MENU</h3>
+                  <h3>MENU</h3> */}
                     {/* <img
                       alt="..."
                       src={require("../../assets/img/brand/argon-react.png")}
                     /> */}
-                  </Link>
+                  {/* </Link>
                 </Col>
                 <Col className="collapse-close" xs="6">
                   <button className="navbar-toggler" id="navbar-collapse-main">
@@ -78,10 +78,10 @@ const AdminNavbar = () => {
                   </button>
                 </Col>
               </Row>
-            </div>
+            </div> */}
 
             {/* Boton que cambia dependiendo de donde este. */}
-            <Nav className="ml-auto d-flex align-items-center" navbar>
+            {/* <Nav className="ml-auto d-flex align-items-center" navbar>
               <NavItem>
                 {isLoginPage ? (
                   <NavLink
@@ -124,7 +124,7 @@ const AdminNavbar = () => {
             </Nav>
           </UncontrolledCollapse>
         </Container>
-      </Navbar>
+      </Navbar> */}
     </>
   );
 };

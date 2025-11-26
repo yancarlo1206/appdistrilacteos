@@ -137,9 +137,9 @@ const Login = () => {
         <Card
           className=" shadow border-0"
           style={{
-            backgroundColor: "rgba(235, 235, 235, 0.7)",
+            backgroundColor: "#fff",
             borderRadius: "2rem",
-            boxShadow: "0 8px 18px rgba(0, 0, 0, 0.25)",
+            boxShadow: "0 8px 18px rgba(255, 255, 255, 1)",
             padding: "20px",
             backdropFilter: "blur(6px)",
             transform: "translateY(-10px)",
@@ -315,10 +315,21 @@ const Login = () => {
                 >
                   Iniciar Sesión
                 </Button>
+                <div
+               >
+                  <a
+                    href="/auth/registro-cliente"
+                     style={{color: "black"}}
+                  >
+                    Registrarse
+                  </a>
+                  </div>
+                
               </div>
             </Form>
           </CardBody>
         </Card>
+       
         {/* <Row className="mt-3">
           <Col xs="6">
             <a

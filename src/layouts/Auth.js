@@ -63,9 +63,9 @@ const Auth = (props) => {
       <div
         className="main-content"
         ref={mainContent}
-        style={{ background: "#EBEBEB" }}
+        style={{ background: "#EBEBEB", top: 0 }}
       >
-        <AuthNavbar />
+        {/* <AuthNavbar /> */}
         <div
           className="header py-7 py-lg-8"
           style={{
@@ -90,7 +90,8 @@ const Auth = (props) => {
                   <Col
                     lg="3"
                     md="4"
-                    sm="12"
+                    sm="6"
+                    xs="6"
                     className="d-flex justify-content-center mb-4 mb-lg-0"
                     style={{ gap: "20px" }}
                   >
@@ -98,7 +99,8 @@ const Auth = (props) => {
                       alt="Logo empresa"
                       src={require("assets/img/icons/logo_sin_fondo.png")}
                       style={{
-                        width: "150px",
+                        width: "100%",
+                        maxWidth: "150px",
                         height: "150px",
                         objectFit: "contain",
                       }}
@@ -108,7 +110,8 @@ const Auth = (props) => {
                   <Col
                     lg="3"
                     md="4"
-                    sm="12"
+                    sm="6"
+                    xs="6"
                     className="d-flex justify-content-center"
                     style={{ gap: "20px" }}
                   >
@@ -116,7 +119,8 @@ const Auth = (props) => {
                       alt="Logo empresa"
                       src={require("assets/img/icons/logo_colanta.png")}
                       style={{
-                        width: "150px",
+                        width: "100%",
+                        maxWidth: "150px",
                         height: "150px",
                         objectFit: "contain",
                       }}

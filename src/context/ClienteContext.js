@@ -92,7 +92,7 @@ const fetchDataCiudades = () => {
     };
 
     const fetchDataTipoDocumentos = () => {
-        let urlFetch = REACT_APP_API_URL+"tipo_documento";
+        let urlFetch = REACT_APP_API_URL+"tipodocumento";
         api.get(urlFetch).then((res) => {
             var data = res.data.map(function (obj) {
                 obj.text = obj.text || obj.descripcion;
@@ -104,7 +104,7 @@ const fetchDataCiudades = () => {
 
 
     const fetchDataEstadoClientes = () => {
-        let urlFetch = REACT_APP_API_URL+"cliente_estado";
+        let urlFetch = REACT_APP_API_URL+"clienteestado";
         api.get(urlFetch).then((res) => {
             var data = res.data.map(function (obj) {
                 obj.text = obj.text || obj.descripcion;
