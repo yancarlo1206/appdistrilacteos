@@ -51,9 +51,9 @@ export const NotificationProvider = ({ children }) => {
 
   // 🔁 Actualiza las notificaciones cada 10 segundos
   useEffect(() => {
-    fetchNotifications();
-    const interval = setInterval(fetchNotifications, 10000);
-    return () => clearInterval(interval);
+    //fetchNotifications();
+    //const interval = setInterval(fetchNotifications, 10000);
+    //return () => clearInterval(interval);
   }, []);
 
   // ➕ Agregar notificación manual (desde formulario, sin duplicar)

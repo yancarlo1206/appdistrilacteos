@@ -23,6 +23,9 @@ import AuthLayout from "layouts/Auth.js";
 
 // ✅ Importa tus contextos globales
 import { NotificationProvider } from "context/NotificationContext";
+import { AuthProvider } from "context/AuthProvider";
+
+
 import { AceptarProvider } from "context/AceptarContext";
 import { ClienteProvider } from "context/ClienteContext"; 
 import { LoadingProvider } from "context/LoadingContext";
@@ -31,7 +34,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <NotificationProvider>
-    
+    <AuthProvider>
     <AceptarProvider>
       <LoadingProvider>
         <BrowserRouter>
@@ -43,5 +46,6 @@ root.render(
         </BrowserRouter>
       </LoadingProvider>
     </AceptarProvider>
+    </AuthProvider>
   </NotificationProvider>
 );

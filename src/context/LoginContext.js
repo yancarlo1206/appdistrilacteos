@@ -15,7 +15,6 @@ const LoginProvider = ({children}) => {
     const { REACT_APP_API_URL_LOGIN } = process.env;
     let url = REACT_APP_API_URL_LOGIN+"login";
 
-
     const navigate = useNavigate();
 
     const login = (data) => {
@@ -35,7 +34,9 @@ const LoginProvider = ({children}) => {
                     setMessage("Inicio de sesión exitoso");
                     setStatus(1);
                 }else{
-    
+                    setType("error");
+                    setMessage("Error al iniciar sesión");
+                    setStatus(1);
                 }
                 setLoading(false);
             })

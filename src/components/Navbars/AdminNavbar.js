@@ -34,7 +34,16 @@ import {
   Media,
 } from "reactstrap";
 
+import { useAuth } from "hooks/useAuth";
+
 const AdminNavbar = (props) => {
+
+  const { logout, getNameUser, getTipoUser } = useAuth();
+  
+  const logOut = () => {
+    logout();
+  };
+
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -58,24 +67,26 @@ const AdminNavbar = (props) => {
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Deison Cardenas
+                      {getNameUser().toUpperCase()}
                     </span>
                   </Media>
                 </Media>
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-arrow" right>
                 <DropdownItem className="noti-title" header tag="div">
-                  <h6 className="text-overflow m-0">Welcome!</h6>
+                  <h6 className="text-overflow m-0">Usuario {getTipoUser()}</h6>
                 </DropdownItem>
                 <DropdownItem to="/admin/user-profile" tag={Link}>
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
-                  <i className="ni ni-user-run" />
-                  <span>Logout</span>
-                </DropdownItem>
+                <DropdownItem
+                    onClick={logOut}
+                  >
+                    <i className="ni ni-user-run" />
+                    <span>Cerrar Sesión</span>
+                  </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
