@@ -1,20 +1,20 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 
-import Login from "./Login";
+import Form from "./Form";
 
-import { LoginProvider } from "context/LoginContext";
+import { RegistroProvider } from "context/RegistroContext";
 
 const Index = () => {
 
     return (
         <>
-            <LoginProvider>
+            <RegistroProvider>
                 <Routes>
-                    <Route exact path="/" element={<Login />} />
+                    <Route exact path="/" element={<Form />} />
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
-            </LoginProvider>
+            </RegistroProvider>
         </>
     );
 }

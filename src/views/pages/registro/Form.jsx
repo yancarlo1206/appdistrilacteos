@@ -1,0 +1,314 @@
+import React, { useContext, useEffect, useState, useRef } from "react";
+import { Button, Card, CardHeader, CardBody, FormGroup, Form, Input, Container, Row, Col } from "reactstrap";
+
+import { Link, useParams } from "react-router-dom";
+import RegistroContext from "context/RegistroContext";
+import RegistroFormValidate from "../../../services/RegistroForm";
+import { useForm } from "hooks/useForm";
+
+const initialForm = {
+    tipoDocumento: "",
+    documento: "",
+    nombre: "",
+    telefono: "",
+    direccion: "",
+    correo: "",
+    ciudad: "",
+    observacion: "",
+};
+
+const Formulario = () => {
+
+    const {
+        detail: data, saveData, tipoDocumentos, ciudades,
+    } = useContext(RegistroContext);
+
+    const {
+        validateInit,
+        validate,
+        form,
+        errors,
+        setValidateInit,
+        setValidate,
+        setForm,
+        setErrors,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+    } = useForm(initialForm, RegistroFormValidate.validationsForm);
+
+    useEffect(() => {
+        setForm(data);
+        setErrors(initialForm);
+    }, [data]);
+
+    const handleSave = (e) => {
+        e.preventDefault();
+        let valid = handleSubmit(e);
+        if (valid) {
+            saveData(form);
+        }
+    }
+
+    return (
+        <>
+            <Container className="mt--6" fluid>
+                <Row>
+                    <div className="col">
+                        <Card className="shadow">
+                            <CardHeader className="">
+                                <div className="align-items-center row">
+                                    <div className="col-11">
+                                        <h3 className="mb-0">Registro de Cliente</h3>
+                                        <p className="text-sm mb-0">
+                                            Formulario de registro de nuevos clientes en el sistema
+                                        </p>
+                                    </div>
+                                </div>
+                            </CardHeader>
+                            <CardBody>
+                                <Form autoComplete="off">
+                                    <div className="pl-lg-4">
+                                        <Row>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-tipoDocumento"
+                                                    >
+                                                        Tipo Documento <span className="text-danger">*</span>
+                                                    </label>
+                                                    <Input
+                                                        className="form-control"
+                                                        id="input-tipoDocumento"
+                                                        type="select"
+                                                        name="tipoDocumento"
+                                                        value={form.tipoDocumento}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        invalid={errors.tipoDocumento !== ""}
+                                                    >
+                                                        <option value="" hidden></option>
+                                                        {tipoDocumentos.map(item => (
+                                                            <option key={item.id} value={item.id}>
+                                                                {item.text}
+                                                            </option>
+                                                        ))};
+                                                    </Input>
+                                                    <div className="invalid-feedback">
+                                                        {errors.tipoDocumento}
+                                                    </div>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-documento"
+                                                    >
+                                                        Documento <span className="text-danger">*</span>
+                                                    </label>
+                                                    <Input
+                                                        className="form-control"
+                                                        id="input-documento"
+                                                        placeholder=""
+                                                        type="text"
+                                                        name="documento"
+                                                        required="required"
+                                                        invalid={errors.documento !== ""}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        defaultValue={data.documento}
+                                                    />
+                                                    <div className="invalid-feedback">
+                                                        {errors.documento}
+                                                    </div>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="12">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-nombre"
+                                                    >
+                                                        Nombre <span className="text-danger">*</span>
+                                                    </label>
+                                                    <Input
+                                                        className="form-control"
+                                                        id="input-nombre"
+                                                        placeholder=""
+                                                        type="text"
+                                                        name="nombre"
+                                                        required="required"
+                                                        invalid={errors.nombre !== ""}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        defaultValue={data.nombre}
+                                                    />
+                                                    <div className="invalid-feedback">
+                                                        {errors.nombre}
+                                                    </div>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-telefono"
+                                                    >
+                                                        Telefono <span className="text-danger">*</span>
+                                                    </label>
+                                                    <Input
+                                                        className="form-control"
+                                                        id="input-telefono"
+                                                        placeholder=""
+                                                        type="number"
+                                                        name="telefono"
+                                                        required="required"
+                                                        invalid={errors.telefono !== ""}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        defaultValue={data.telefono}
+                                                        autoComplete="off"
+                                                        inputMode="numeric"
+                                                        min={0}
+                                                        step="any"
+                                                    />
+                                                    <div className="invalid-feedback">
+                                                        {errors.telefono}
+                                                    </div>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-correo"
+                                                    >
+                                                        Correo <span className="text-danger">*</span>
+                                                    </label>
+                                                    <Input
+                                                        className="form-control"
+                                                        id="input-correo"
+                                                        placeholder=""
+                                                        type="email"
+                                                        name="correo"
+                                                        required="required"
+                                                        invalid={errors.correo !== ""}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        defaultValue={data.correo}
+                                                        autoComplete="off"
+                                                    />
+                                                    <div className="invalid-feedback">
+                                                        {errors.correo}
+                                                    </div>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-direccion"
+                                                    >
+                                                        Direccion <span className="text-danger">*</span>
+                                                    </label>
+                                                    <Input
+                                                        className="form-control"
+                                                        id="input-direccion"
+                                                        placeholder=""
+                                                        type="text"
+                                                        name="direccion"
+                                                        required="required"
+                                                        invalid={errors.direccion !== ""}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        defaultValue={data.direccion}
+                                                        autoComplete="off"
+                                                    />
+                                                    <div className="invalid-feedback">
+                                                        {errors.direccion}
+                                                    </div>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-ciudad"
+                                                    >
+                                                        Ciudad <span className="text-danger">*</span>
+                                                    </label>
+                                                    <Input
+                                                        className="form-control"
+                                                        id="input-ciudad"
+                                                        type="select"
+                                                        name="ciudad"
+                                                        value={form.ciudad}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        invalid={errors.ciudad !== ""}
+                                                    >
+                                                        <option value="" hidden></option>
+                                                        {ciudades.map(item => (
+                                                            <option key={item.id} value={item.id}>
+                                                                {item.text}
+                                                            </option>
+                                                        ))};
+                                                    </Input>
+                                                    <div className="invalid-feedback">
+                                                        {errors.ciudad}
+                                                    </div>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="12">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-observacion"
+                                                    >
+                                                        Observacion
+                                                    </label>
+                                                    <Input
+                                                        className="form-control"
+                                                        id="input-observacion"
+                                                        placeholder=""
+                                                        type="textarea"
+                                                        rows="3"
+                                                        name="observacion"
+                                                        required="required"
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        defaultValue={data.observacion}
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                        <Row className="col justify-content-end">
+                                            <Button
+                                                color="success"
+                                                href=""
+                                                onClick={handleSave}
+                                            >
+                                                Guardar
+                                            </Button>
+                                            <Link
+                                                className="btn btn-danger"
+                                                color="default"
+                                                to={"/admin/clientes"}
+                                            >
+                                                Cancelar
+                                            </Link>
+                                        </Row>
+                                    </div>
+                                </Form>
+                            </CardBody>
+                        </Card>
+                    </div>
+                </Row>
+            </Container>
+        </>
+    );
+};
+
+export default Formulario;

@@ -56,12 +56,6 @@ export const validationsForm = (form) => {
         errores.ciudad = "";
     }
 
-    if (!form.clienteEstado) {
-        errores.clienteEstado = "Please the field is required.";
-    } else {
-        errores.clienteEstado = "";
-    }
-
     return errores;
 };
 

@@ -23,6 +23,10 @@ const initialForm = {
   direccion: "",
   telefono: "",
   correo: "",
+  tipoDocumento: "",
+  documento: "",
+  ciudad: "",
+  clienteEstado: "",
 };
 
 const Formulario = () => {
@@ -35,6 +39,9 @@ const Formulario = () => {
     setToDetail,
     setDetail,
     setToUpdate,
+    ciudades,
+    tipoDocumentos,
+    estadoClientes,
   } = useContext(ClienteContext);
 
   const {
@@ -86,7 +93,6 @@ const Formulario = () => {
 
   return (
     <>
-      <Header />
       <Container className="mt--7" fluid>
         <Row>
           <div className="col">
@@ -102,9 +108,64 @@ const Formulario = () => {
                 </div>
               </CardHeader>
               <CardBody>
-                <Form>
+                <Form autoComplete="off">
                   <div className="pl-lg-4">
                     <Row>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-tipoDocumento"
+                          >
+                            Tipo Documento <span className="text-danger">*</span>
+                          </label>
+                          <Input
+                            className="form-control"
+                            id="input-tipoDocumento"
+                            type="select"
+                            name="tipoDocumento"
+                            value={form.tipoDocumento}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            invalid={errors.tipoDocumento !== ""}
+                          >
+                            <option value="" hidden></option>
+                            {tipoDocumentos.map(item => (
+                              <option key={item.id} value={item.id}>
+                                {item.text}
+                              </option>
+                            ))};
+                          </Input>
+                          <div className="invalid-feedback">
+                            {errors.tipoDocumento}
+                          </div>
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-documento"
+                          >
+                            Documento <span className="text-danger">*</span>
+                          </label>
+                          <Input
+                            className="form-control"
+                            id="input-documento"
+                            placeholder=""
+                            type="text"
+                            name="documento"
+                            required="required"
+                            invalid={errors.documento !== ""}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            defaultValue={data.documento}
+                          />
+                          <div className="invalid-feedback">
+                            {errors.documento}
+                          </div>
+                        </FormGroup>
+                      </Col>
                       <Col lg="12">
                         <FormGroup>
                           <label
@@ -130,7 +191,62 @@ const Formulario = () => {
                           </div>
                         </FormGroup>
                       </Col>
-                      <Col lg="12">
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-telefono"
+                          >
+                            Telefono <span className="text-danger">*</span>
+                          </label>
+                          <Input
+                            className="form-control"
+                            id="input-telefono"
+                            placeholder=""
+                            type="number"
+                            name="telefono"
+                            required="required"
+                            invalid={errors.telefono !== ""}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            defaultValue={data.telefono}
+                            autoComplete="off"
+                            inputMode="numeric"
+                            min={0}
+                            step="any"
+                          />
+                          <div className="invalid-feedback">
+                            {errors.telefono}
+                          </div>
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-correo"
+                          >
+                            Correo <span className="text-danger">*</span>
+                          </label>
+                          <Input
+                            className="form-control"
+                            id="input-correo"
+                            placeholder=""
+                            type="email"
+                            name="correo"
+                            required="required"
+                            invalid={errors.correo !== ""}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            defaultValue={data.correo}
+                            autoComplete="off"
+                          />
+                          <div className="invalid-feedback">
+                            {errors.correo}
+                          </div>
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -149,34 +265,70 @@ const Formulario = () => {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             defaultValue={data.direccion}
+                            autoComplete="off"
                           />
                           <div className="invalid-feedback">
                             {errors.direccion}
                           </div>
                         </FormGroup>
                       </Col>
-                      <Col lg="12">
+                      <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-telefono"
+                            htmlFor="input-ciudad"
                           >
-                            Telefono <span className="text-danger">*</span>
+                            Ciudad <span className="text-danger">*</span>
                           </label>
                           <Input
                             className="form-control"
-                            id="input-telefono"
-                            placeholder=""
-                            type="text"
-                            name="telefono"
-                            required="required"
-                            invalid={errors.telefono !== ""}
+                            id="input-ciudad"
+                            type="select"
+                            name="ciudad"
+                            value={form.ciudad}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            defaultValue={data.telefono}
-                          />
+                            invalid={errors.ciudad !== ""}
+                          >
+                            <option value="" hidden></option>
+                            {ciudades.map(item => (
+                              <option key={item.id} value={item.id}>
+                                {item.text}
+                              </option>
+                            ))};
+                          </Input>
                           <div className="invalid-feedback">
-                            {errors.telefono}
+                            {errors.ciudad}
+                          </div>
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-estadoCliente"
+                          >
+                            Estado Cliente <span className="text-danger">*</span>
+                          </label>
+                          <Input
+                            className="form-control"
+                            id="input-clienteEstado"
+                            type="select"
+                            name="clienteEstado"
+                            value={form.clienteEstado}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            invalid={errors.clienteEstado !== ""}
+                          >
+                            <option value="" hidden></option>
+                            {estadoClientes.map(item => (
+                              <option key={item.id} value={item.id}>
+                                {item.text}
+                              </option>
+                            ))};
+                          </Input>
+                          <div className="invalid-feedback">
+                            {errors.clienteEstado}
                           </div>
                         </FormGroup>
                       </Col>
@@ -184,48 +336,39 @@ const Formulario = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-correo"
+                            htmlFor="input-observacion"
                           >
-                            Correo <span className="text-danger">*</span>
+                            Observacion
                           </label>
                           <Input
                             className="form-control"
-                            id="input-correo"
+                            id="input-observacion"
                             placeholder=""
-                            type="text"
-                            name="correo"
+                            type="textarea"
+                            rows="3"
+                            name="observacion"
                             required="required"
-                            invalid={errors.correo !== ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            defaultValue={data.correo}
+                            defaultValue={data.observacion}
                           />
-                          <div className="invalid-feedback">
-                            {errors.correo}
-                          </div>
                         </FormGroup>
                       </Col>
                     </Row>
                     <Row className="col justify-content-end">
                       {module == "actualizar" ? (
-                        <Button color="primary" href="" onClick={handleUpdate}>
+                        <Button
+                          color="success"
+                          href=""
+                          onClick={handleUpdate}
+                        >
                           Actualizar
                         </Button>
                       ) : (
                         <Button
+                          color="success"
                           href=""
                           onClick={handleSave}
-                          style={{
-                            background:
-                              "linear-gradient(90deg, #84C63B 0%, #58AB01 100%)",
-                            border: "none",
-                            borderRadius: "20px",
-                            color: "#fff",
-                            fontWeight: "600",
-                            padding: "12px 20px",
-                            boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
-                            transition: "all 0.3s ease",
-                          }}
                         >
                           Guardar
                         </Button>
