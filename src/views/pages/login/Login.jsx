@@ -122,15 +122,6 @@ const Login = () => {
                 >
                   Iniciar Sesión
                 </Button>
-                <div
-                >
-                  <a
-                    href="/auth/registro-cliente"
-                    style={{ color: "black" }}
-                  >
-                    Registrarse
-                  </a>
-                </div>
               </div>
             </Form>
           </CardBody>
@@ -139,19 +130,18 @@ const Login = () => {
           <Col xs="6">
             <a
               className="text-dark"
-              href="/auth/registro-cliente"
+              href="/auth/registro"
             >
-              <small>Registrarse</small>
+              <small>Registrarse como Cliente</small>
             </a>
           </Col>
           <Col className="text-right" xs="6">
-            <a
+            <Link
               className="text-dark"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
+              to="/auth/registro/estado"
             >
-              <small>Ver Estado Registro</small>
-            </a>
+              <small>Ver Estado del Cliente</small>
+            </Link>
           </Col>
         </Row>
       </Col>

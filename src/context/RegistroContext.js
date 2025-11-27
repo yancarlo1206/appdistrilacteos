@@ -4,11 +4,14 @@ import NotificationContext from "context/NotificationContext";
 import LoadingContext from "context/LoadingContext";
 import { useNavigate } from "react-router";
 
+import { Progress } from "reactstrap";
+
 const RegistroContext = createContext();
 
 const RegistroProvider = ({ children }) => {
 
     const [detail, setDetail] = useState({});
+    const [detailState, setDetailState] = useState({ "estado": "", "porcentaje": 0 });
 
     const [tipoDocumentos, setTipoDocumentos] = useState([]);
     const [ciudades, setCiudades] = useState([]);
@@ -80,8 +83,35 @@ const RegistroProvider = ({ children }) => {
         })
     }
 
+    const consultarData = (data) => {
+        setLoading(true);
+        let urlFetch = REACT_APP_API_URL + `cliente/estado?documento=${data.documento}&tipoDocumento=${data.tipoDocumento}`;
+        api.get(urlFetch).then((res) => {
+            if (!res.err) {
+                let porcentaje = 0;
+                if (res.data.estado === "EN PROCESO") {
+                    porcentaje = 33;
+                } else if (res.data.estado === "EN PROCESO") {
+                    porcentaje = 66;
+                } else {
+                    porcentaje = 100;
+                }
+                const detail = {
+                    ...res.data,
+                    porcentaje: porcentaje,
+                };
+                setDetailState(detail);
+            } else {
+                setType("danger");
+                setMessage("El Registro del Cliente no se pudo realizar");
+                setStatus(0);
+            }
+            setLoading(false);
+        });
+    }
+
     const data = {
-        saveData, detail, tipoDocumentos, ciudades,
+        saveData, detail, tipoDocumentos, ciudades, consultarData, detailState
     };
 
     return <RegistroContext.Provider value={data}>{children}</RegistroContext.Provider>;

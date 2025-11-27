@@ -21,7 +21,7 @@ import Cliente from "views/pages/cliente/Index";
 import Ticket from "views/pages/ticket/Index";
 import FormularioCliente from "views/pages/FormularioCliente.js";
 import Aceptar from "views/pages/aceptar/index.js";
-import FormRegistro from "views/pages/registro/Index";
+import Registro from "views/pages/registro/Index";
 
 var routes = [
   {
@@ -46,10 +46,10 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/registro-cliente", // ← Debe coincidir con el NavLink
+    path: "/registro/*", // ← Debe coincidir con el NavLink
     name: "Registro Cliente",
     icon: "ni ni-single-02 text-yellow",
-    component: <FormRegistro />,
+    component: <Registro />,
     layout: "/auth",
     invisible: true
   },

@@ -295,7 +295,7 @@ const Formulario = () => {
                                             <Link
                                                 className="btn btn-danger"
                                                 color="default"
-                                                to={"/admin/clientes"}
+                                                to={"/auth/login"}
                                             >
                                                 Cancelar
                                             </Link>

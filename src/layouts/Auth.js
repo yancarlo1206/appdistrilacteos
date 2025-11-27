@@ -79,72 +79,72 @@ const Auth = (props) => {
           <Container>
             <div className="header-body text-center mb-7">
 
-               
-                <h1
-                  className="text-white fw-bold mb-4"
-                  style={{
-                    fontSize: "2rem",
-                    letterSpacing: "1px",
-                    textShadow: "1px 1px 4px rgba(0,0,0,0.3)",
-                  }}
-                >
-                  Bienvenido
-                </h1>
-                <Row className="justify-content-center align-items-center">
-                  <Col
-                    lg="3"
-                    md="4"
-                    sm="6"
-                    xs="6"
-                    className="d-flex justify-content-center mb-4 mb-lg-0"
-                    style={{ gap: "20px" }}
-                  >
-                    <img
-                      alt="Logo empresa"
-                      src={require("assets/img/icons/logo_sin_fondo.png")}
-                      style={{
-                        width: "100%",
-                        maxWidth: "150px",
-                        height: "150px",
-                        objectFit: "contain",
-                      }}
-                    />
-                  </Col>
 
-                  <Col
-                    lg="3"
-                    md="4"
-                    sm="6"
-                    xs="6"
-                    className="d-flex justify-content-center"
-                    style={{ gap: "20px" }}
-                  >
-                    <img
-                      alt="Logo empresa"
-                      src={require("assets/img/icons/logo_colanta.png")}
-                      style={{
-                        width: "100%",
-                        maxWidth: "150px",
-                        height: "150px",
-                        objectFit: "contain",
-                      }}
-                    />
-                  </Col>
-
-                </Row>
-                <h2
-                  className="text-light mb-5"
-                  style={{
-                    fontWeight: "500",
-                    textShadow: "1px 1px 3px rgba(0,0,0,0.2)",
-                  }}
+              <h1
+                className="text-white fw-bold mb-4"
+                style={{
+                  fontSize: "2rem",
+                  letterSpacing: "1px",
+                  textShadow: "1px 1px 4px rgba(0,0,0,0.3)",
+                }}
+              >
+                Bienvenido
+              </h1>
+              <Row className="justify-content-center align-items-center">
+                <Col
+                  lg="3"
+                  md="4"
+                  sm="6"
+                  xs="6"
+                  className="d-flex justify-content-center mb-4 mb-lg-0"
+                  style={{ gap: "20px" }}
                 >
-                  Distribuidor Autorizado
-                </h2>
+                  <img
+                    alt="Logo empresa"
+                    src={require("assets/img/icons/logo_sin_fondo.png")}
+                    style={{
+                      width: "100%",
+                      maxWidth: "150px",
+                      height: "150px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Col>
+
+                <Col
+                  lg="3"
+                  md="4"
+                  sm="6"
+                  xs="6"
+                  className="d-flex justify-content-center"
+                  style={{ gap: "20px" }}
+                >
+                  <img
+                    alt="Logo empresa"
+                    src={require("assets/img/icons/logo_colanta.png")}
+                    style={{
+                      width: "100%",
+                      maxWidth: "150px",
+                      height: "150px",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Col>
+
+              </Row>
+              <h2
+                className="text-light mb-5"
+                style={{
+                  fontWeight: "500",
+                  textShadow: "1px 1px 3px rgba(0,0,0,0.2)",
+                }}
+              >
+                Distribuidor Autorizado
+              </h2>
             </div>
           </Container>
-          
-            {/* <svg
+
+          {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="none"
               version="1.1"
@@ -159,26 +159,26 @@ const Auth = (props) => {
                 style={{background: "#EBEBEB"}}
               />
             </svg> */}
-          
+
         </div>
         {/* Page content */}
         <Container className="mt--8 pb-5" >
           <Row
             className="justify-content-center"
-           
+
           >
             <LoadingProvider>
               <NotificationProvider>
                 <LoginProvider>
                   <Routes>
-                    {!isAuthenticated() ? getRoutes(routes):""}
+                    {!isAuthenticated() ? getRoutes(routes) : ""}
                     <Route
                       path="*"
                       element={<Navigate to="/admin/index" replace />}
                     />
                   </Routes>
 
-             
+
 
 
                 </LoginProvider>
