@@ -18,7 +18,7 @@
 import Index from "views/Index.js";
 import Login from "views/pages/login/Login.jsx";
 import Cliente from "views/pages/cliente/Index";
-import Tickets from "views/pages/tickets/Index";
+import Ticket from "views/pages/ticket/Index";
 import FormularioCliente from "views/pages/FormularioCliente.js";
 import Aceptar from "views/pages/aceptar/index.js";
 import FormRegistro from "views/pages/registro/Index";
@@ -39,10 +39,10 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/tickets",
-    name: "Tickets",
+    path: "/ticket",
+    name: "Ticket",
     icon: "ni ni-user-run text-primary",
-    component: <Tickets />,
+    component: <Ticket />,
     layout: "/admin",
   },
   {
