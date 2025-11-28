@@ -40,7 +40,6 @@ const ClienteProvider = ({ children }) => {
   let url = REACT_APP_API_URL + "cliente";
 
   useEffect(() => {
-
     fetchData();
     fetchDataCiudades();
     fetchDataTipoDocumentos();
