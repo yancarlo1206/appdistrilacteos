@@ -3,55 +3,61 @@ export const validationsForm = (form) => {
     let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
     let regexComments = /^.{1,255}$/;
     let regexText40 = /^.{1,40}$/;
+    let regexPhone = /^\d+$/; // Solo números
+    let regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Formato de email
 
     if (!form.tipoDocumento) {
-        errores.tipoDocumento = "Please the field is required.";
+        errores.tipoDocumento = "Por favor, este campo es obligatorio.";
     } else {
         errores.tipoDocumento = "";
     }
 
     if (!form.documento) {
-        errores.documento = "Please the field is required.";
+        errores.documento = "Por favor, este campo es obligatorio.";
     } else if (!regexText40.test(form.documento.trim())) {
-        errores.documento = "The field accepts up to 40 characters.";
+        errores.documento = "El campo acepta hasta 40 caracteres.";
     } else {
         errores.documento = "";
     }
 
     if (!form.nombre) {
-        errores.nombre = "Please the field is required.";
+        errores.nombre = "Por favor, este campo es obligatorio.";
     } else if (!regexText40.test(form.nombre.trim())) {
-        errores.nombre = "The field accepts up to 40 characters.";
+        errores.nombre = "El campo acepta hasta 40 caracteres.";
     } else {
         errores.nombre = "";
     }
 
     if (!form.telefono) {
-        errores.telefono = "Please the field is required.";
+        errores.telefono = "Por favor, este campo es obligatorio.";
+    } else if (!regexPhone.test(form.telefono.trim())) {
+        errores.telefono = "El teléfono solo debe contener números.";
     } else if (!regexText40.test(form.telefono.trim())) {
-        errores.telefono = "The field accepts up to 40 characters.";
+        errores.telefono = "El campo acepta hasta 40 caracteres.";
     } else {
         errores.telefono = "";
     }
 
     if (!form.direccion) {
-        errores.direccion = "Please the field is required.";
+        errores.direccion = "Por favor, este campo es obligatorio.";
     } else if (!regexText40.test(form.direccion.trim())) {
-        errores.direccion = "The field accepts up to 40 characters.";
+        errores.direccion = "El campo acepta hasta 40 caracteres.";
     } else {
         errores.direccion = "";
     }
 
     if (!form.correo) {
-        errores.correo = "Please the field is required.";
+        errores.correo = "Por favor, este campo es obligatorio.";
+    } else if (!regexEmail.test(form.correo.trim())) {
+        errores.correo = "Por favor, ingrese un correo electrónico válido.";
     } else if (!regexText40.test(form.correo.trim())) {
-        errores.correo = "The field accepts up to 40 characters.";
+        errores.correo = "El campo acepta hasta 40 caracteres.";
     } else {
         errores.correo = "";
     }
 
     if (!form.ciudad) {
-        errores.ciudad = "Please the field is required.";
+        errores.ciudad = "Por favor, este campo es obligatorio.";
     } else {
         errores.ciudad = "";
     }

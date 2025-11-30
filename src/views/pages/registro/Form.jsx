@@ -156,13 +156,13 @@ const Formulario = () => {
                                                         className="form-control-label"
                                                         htmlFor="input-telefono"
                                                     >
-                                                        Telefono <span className="text-danger">*</span>
+                                                        Teléfono <span className="text-danger">*</span>
                                                     </label>
                                                     <Input
                                                         className="form-control"
                                                         id="input-telefono"
                                                         placeholder=""
-                                                        type="number"
+                                                        type="text"
                                                         name="telefono"
                                                         required="required"
                                                         invalid={errors.telefono !== ""}
@@ -170,9 +170,6 @@ const Formulario = () => {
                                                         onBlur={handleBlur}
                                                         defaultValue={data.telefono}
                                                         autoComplete="off"
-                                                        inputMode="numeric"
-                                                        min={0}
-                                                        step="any"
                                                     />
                                                     <div className="invalid-feedback">
                                                         {errors.telefono}
@@ -211,7 +208,7 @@ const Formulario = () => {
                                                         className="form-control-label"
                                                         htmlFor="input-direccion"
                                                     >
-                                                        Direccion <span className="text-danger">*</span>
+                                                        Dirección <span className="text-danger">*</span>
                                                     </label>
                                                     <Input
                                                         className="form-control"
@@ -267,7 +264,7 @@ const Formulario = () => {
                                                         className="form-control-label"
                                                         htmlFor="input-observacion"
                                                     >
-                                                        Observacion
+                                                        Observación
                                                     </label>
                                                     <Input
                                                         className="form-control"
