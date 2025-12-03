@@ -333,7 +333,7 @@ const Formulario = () => {
                                 className="form-control-label"
                                 htmlFor="input-tipoCliente"
                               >
-                                Tipo Cliente
+                                Tipo Cliente <span className="text-danger">*</span>
                               </label>
                               <Input
                                 className="form-control"
@@ -343,6 +343,7 @@ const Formulario = () => {
                                 value={form.tipoCliente}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                invalid={errors.tipoCliente !== ""}
                               >
                                 <option value="" hidden></option>
                                 {tipoClientes.map(item => (
@@ -351,6 +352,9 @@ const Formulario = () => {
                                   </option>
                                 ))};
                               </Input>
+                              <div className="invalid-feedback">
+                                {errors.tipoCliente}
+                              </div>
                             </FormGroup>
                           </Col>
                           <Col lg="6">
@@ -359,7 +363,7 @@ const Formulario = () => {
                                 className="form-control-label"
                                 htmlFor="input-zona"
                               >
-                                Zona
+                                Zona <span className="text-danger">*</span>
                               </label>
                               <Input
                                 className="form-control"
@@ -369,6 +373,7 @@ const Formulario = () => {
                                 value={form.zona}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                invalid={errors.zona !== ""}
                               >
                                 <option value="" hidden></option>
                                 {zonas.map(item => (
@@ -377,6 +382,9 @@ const Formulario = () => {
                                   </option>
                                 ))};
                               </Input>
+                              <div className="invalid-feedback">
+                                {errors.zona}
+                              </div>
                             </FormGroup>
                           </Col>
                           <Col lg="6">
@@ -385,7 +393,7 @@ const Formulario = () => {
                                 className="form-control-label"
                                 htmlFor="input-listaPrecio"
                               >
-                                Lista Precio
+                                Lista Precio <span className="text-danger">*</span>
                               </label>
                               <Input
                                 className="form-control"
@@ -395,6 +403,7 @@ const Formulario = () => {
                                 value={form.listaPrecio}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                invalid={errors.listaPrecio !== ""}
                               >
                                 <option value="" hidden></option>
                                 {listaPrecios.map(item => (
@@ -403,6 +412,9 @@ const Formulario = () => {
                                   </option>
                                 ))};
                               </Input>
+                              <div className="invalid-feedback">
+                                {errors.listaPrecio}
+                              </div>
                             </FormGroup>
                           </Col>
                           <Col lg="6">
@@ -411,7 +423,7 @@ const Formulario = () => {
                                 className="form-control-label"
                                 htmlFor="input-vendedor"
                               >
-                                Vendedor
+                                Vendedor <span className="text-danger">*</span>
                               </label>
                               <Input
                                 className="form-control"
@@ -421,6 +433,7 @@ const Formulario = () => {
                                 value={form.vendedor}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                invalid={errors.vendedor !== ""}
                               >
                                 <option value="" hidden></option>
                                 {vendedores.map(item => (
@@ -429,6 +442,9 @@ const Formulario = () => {
                                   </option>
                                 ))};
                               </Input>
+                              <div className="invalid-feedback">
+                                {errors.vendedor}
+                              </div>
                             </FormGroup>
                           </Col>
                           <Col lg="6">

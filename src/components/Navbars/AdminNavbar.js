@@ -39,7 +39,7 @@ import { useAuth } from "hooks/useAuth";
 const AdminNavbar = (props) => {
 
   const { logout, getNameUser, getTipoUser } = useAuth();
-  
+
   const logOut = () => {
     logout();
   };
@@ -52,7 +52,7 @@ const AdminNavbar = (props) => {
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
             to="/"
           >
-            {props.brandText}
+            {/* ?*props.brandText*? */}
           </Link>
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>
@@ -82,11 +82,11 @@ const AdminNavbar = (props) => {
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem
-                    onClick={logOut}
-                  >
-                    <i className="ni ni-user-run" />
-                    <span>Cerrar Sesión</span>
-                  </DropdownItem>
+                  onClick={logOut}
+                >
+                  <i className="ni ni-user-run" />
+                  <span>Cerrar Sesión</span>
+                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>

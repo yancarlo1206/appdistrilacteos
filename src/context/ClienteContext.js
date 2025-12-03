@@ -141,7 +141,7 @@ const ClienteProvider = ({ children }) => {
     let urlFetch = REACT_APP_API_URL + "vendedor";
     api.get(urlFetch).then((res) => {
       var data = res.data.map(function (obj) {
-        obj.text = obj.text || obj.descripcion;
+        obj.text = obj.text || obj.nombre;
         return obj;
       });
       setVendedores(data);
@@ -220,6 +220,7 @@ const ClienteProvider = ({ children }) => {
     api.put(endpoint, options).then((res) => {
       if (!res.err) {
         setDetail(res.data);
+        updateDataInformation(data);
         dispatch({ type: TYPES.UPDATE_DATA, payload: res.data });
         navigate("/admin/cliente");
         setType("success");
@@ -228,6 +229,31 @@ const ClienteProvider = ({ children }) => {
       } else {
       }
       setLoading(false);
+    });
+  };
+
+  const updateDataInformation = (data) => {
+
+    let endpoint = REACT_APP_API_URL + "clienteinformacion";
+
+    const newData = {
+      cliente: { id: data.id },
+      zona: { id: data.zona },
+      vendedor: { id: data.vendedor },
+      listaprecio: { id: data.listaPrecio },
+      tipoCliente: { id: data.tipoCliente }
+    };
+
+    let options = {
+      body: newData,
+      headers: { "content-type": "application/json" },
+    };
+
+    api.post(endpoint, options).then((res) => {
+      if (!res.err) {
+
+      }
+
     });
   };
 

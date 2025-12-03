@@ -68,6 +68,30 @@ export const validationsForm = (form) => {
         errores.clienteEstado = "";
     }
 
+    if (form.clienteEstado == 1 && !form.tipoCliente) {
+        errores.tipoCliente = "Por favor, este campo es obligatorio.";
+    } else {
+        errores.tipoCliente = "";
+    }
+
+    if (form.clienteEstado == 1 && !form.zona) {
+        errores.zona = "Por favor, este campo es obligatorio.";
+    } else {
+        errores.zona = "";
+    }
+
+    if (form.clienteEstado == 1 && !form.vendedor) {
+        errores.vendedor = "Por favor, este campo es obligatorio.";
+    } else {
+        errores.vendedor = "";
+    }
+
+    if (form.clienteEstado == 1 && !form.listaPrecio) {
+        errores.listaPrecio = "Por favor, este campo es obligatorio.";
+    } else {
+        errores.listaPrecio = "";
+    }
+
     return errores;
 };
 

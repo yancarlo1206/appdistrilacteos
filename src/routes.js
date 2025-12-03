@@ -43,13 +43,6 @@ var routes = [
     layout: "/auth",
     invisible: true
   },
-  {
-    path: "/aceptar",
-    name: "Aceptar Clientes",
-    icon: "ni ni-user-run text-primary",
-    component: <Aceptar />,
-    layout: "/admin",
-  },
 ];
 
 export default routes;

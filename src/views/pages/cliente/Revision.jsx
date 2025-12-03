@@ -5,19 +5,15 @@ import ListGeneric from "../../../components/List/Index.js"
 import { Card, CardHeader, CardBody, Container, Row } from "reactstrap";
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
-import { FormGroup, Label, Input, Button } from "reactstrap";
-import ReactBSAlert from "react-bootstrap-sweetalert";
+import { FormGroup, Label, Input } from "reactstrap";
 
 function List({ tab }) {
 
     const {
-        db: data, setDetail, setToDetail, setToUpdate, setViewModal, setModule, deleteData
+        db: data, setDetail, setToDetail, setToUpdate, setViewModal, setModule
     } = useContext(ClienteContext);
 
     const [filter, setFilter] = useState("");
-
-    const [state, setState] = useState({});
-    const [idDelete, setIdDelete] = useState();
 
     const filteredData = data.filter(item =>
         Object.values(item)
@@ -41,64 +37,18 @@ function List({ tab }) {
                     >
                         Detallar
                     </Link>
-                    <Button
-                        className='btn btn-danger btn-sm'
-                        onClick={e => handleDelete(e, row.id)}
-                    >
-                        Eliminar
-                    </Button>
                 </>
             )
         }
     ];
-
-    const confirmAlert = (id) => {
-        setState({
-            alert: (
-                <ReactBSAlert
-                    warning
-                    style={{ display: "block" }}
-                    title="¿Estás seguro?"
-                    onCancel={() => hideAlert()}
-                    onConfirm={() => { setIdDelete(id); hideAlert(); }}
-                    showCancel
-                    confirmBtnBsStyle="primary"
-                    confirmBtnText="Si, Eliminarlo!"
-                    cancelBtnBsStyle="danger"
-                    cancelBtnText="Cancelar"
-                    btnSize=""
-                >
-                    No podrás revertir esto!
-                </ReactBSAlert>
-            )
-        });
-    };
-
-    const hideAlert = () => {
-        setState({
-            alert: null
-        });
-    };
 
     useEffect(() => {
         setDetail({});
         setToUpdate(0);
     }, []);
 
-    useEffect(() => {
-        if (idDelete) {
-            deleteData(idDelete);
-        }
-    }, [idDelete]);
-
-    const handleDelete = (e, id) => {
-        e.preventDefault();
-        confirmAlert(id);
-    }
-
     return (
         <>
-            {state.alert}
             <Container className="mt--7" fluid>
                 <Row>
                     <div className="col">
@@ -106,7 +56,7 @@ function List({ tab }) {
                             <CardHeader className="">
                                 <div className="align-items-center row">
                                     <div className="col-11">
-                                        <h3 className="mb-0">Clientes</h3>
+                                        <h3 className="mb-0">Clientes en Revision</h3>
                                         <p className="text-sm mb-0">
                                             Listado de clientes registrados en el sistema
                                         </p>
@@ -130,21 +80,6 @@ function List({ tab }) {
                                     pagination
                                     highlightOnHover
                                 />
-                                <div className="m-3">
-                                    <Link
-                                        className='btn btn-success'
-                                        color="success"
-                                        to={"add"}
-                                    >
-                                        Agregar Cliente
-                                    </Link>
-                                    <Link
-                                        className='btn btn-info'
-                                        to={"en_revision"}
-                                    >
-                                        Clientes en Revisión
-                                    </Link>
-                                </div>
                             </CardBody>
                         </Card>
                     </div>
