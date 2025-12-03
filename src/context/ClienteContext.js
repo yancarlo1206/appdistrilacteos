@@ -27,6 +27,11 @@ const ClienteProvider = ({ children }) => {
   const [tipoDocumentos, setTipoDocumentos] = useState([]);
   const [estadoClientes, setEstadoClientes] = useState([]);
 
+  const [zonas, setZonas] = useState([]);
+  const [vendedores, setVendedores] = useState([]);
+  const [listaPrecios, setListaPrecios] = useState([]);
+  const [tipoClientes, setTipoClientes] = useState([]);
+
   const navigate = useNavigate();
   const { REACT_APP_API_URL } = process.env;
 
@@ -41,18 +46,25 @@ const ClienteProvider = ({ children }) => {
 
   useEffect(() => {
     fetchData();
-    fetchDataCiudades();
-    fetchDataTipoDocumentos();
-    fetchDataEstadoClientes();
   }, []);
-
-
 
   useEffect(() => {
     if (toUpdate && toUpdate != 0) {
       fetchDataDetail();
     }
   }, [toUpdate]);
+
+  useEffect(() => {
+    if (module == "actualizar") {
+      fetchDataZonas();
+      fetchDataVendedores();
+      fetchDataListaPrecios();
+      fetchDataTipoClientes();
+    }
+    fetchDataCiudades();
+    fetchDataTipoDocumentos();
+    fetchDataEstadoClientes();
+  }, [module]);
 
   const fetchData = () => {
     setLoading(true);
@@ -62,10 +74,9 @@ const ClienteProvider = ({ children }) => {
       } else {
         dispatch({ type: TYPES.NO_DATA });
       }
-      setLoading(false);
+      //setLoading(false);
     });
   };
-
 
   const fetchDataDetail = () => {
     setLoading(true);
@@ -78,7 +89,6 @@ const ClienteProvider = ({ children }) => {
         clienteEstado: res.data?.clienteEstado?.id ?? null,
       };
       setDetail(detail);
-      setLoading(false);
     });
   };
 
@@ -112,6 +122,51 @@ const ClienteProvider = ({ children }) => {
         return obj;
       });
       setEstadoClientes(data);
+      setLoading(false);
+    });
+  };
+
+  const fetchDataZonas = () => {
+    let urlFetch = REACT_APP_API_URL + "zona";
+    api.get(urlFetch).then((res) => {
+      var data = res.data.map(function (obj) {
+        obj.text = obj.text || obj.descripcion;
+        return obj;
+      });
+      setZonas(data);
+    });
+  };
+
+  const fetchDataVendedores = () => {
+    let urlFetch = REACT_APP_API_URL + "vendedor";
+    api.get(urlFetch).then((res) => {
+      var data = res.data.map(function (obj) {
+        obj.text = obj.text || obj.descripcion;
+        return obj;
+      });
+      setVendedores(data);
+    });
+  };
+
+  const fetchDataListaPrecios = () => {
+    let urlFetch = REACT_APP_API_URL + "listaprecio";
+    api.get(urlFetch).then((res) => {
+      var data = res.data.map(function (obj) {
+        obj.text = obj.text || obj.descripcion;
+        return obj;
+      });
+      setListaPrecios(data);
+    });
+  };
+
+  const fetchDataTipoClientes = () => {
+    let urlFetch = REACT_APP_API_URL + "tipocliente";
+    api.get(urlFetch).then((res) => {
+      var data = res.data.map(function (obj) {
+        obj.text = obj.text || obj.descripcion;
+        return obj;
+      });
+      setTipoClientes(data);
     });
   };
 
@@ -212,6 +267,10 @@ const ClienteProvider = ({ children }) => {
     ciudades,
     tipoDocumentos,
     estadoClientes,
+    zonas,
+    vendedores,
+    listaPrecios,
+    tipoClientes,
   };
 
   return (

@@ -102,7 +102,7 @@ export const AceptarProvider = ({ children }) => {
   } = notificationCtx;
 
   // 🧹 Sincroniza y limpia pendientes si el backend no tiene registros
-  useEffect(() => {
+  /*useEffect(() => {
     const limpiarPendientes = async () => {
       try {
         const res = await fetch(`${API_URL}cliente/pendientes`);
@@ -134,7 +134,7 @@ export const AceptarProvider = ({ children }) => {
     };
 
     limpiarPendientes();
-  }, []);
+  }, []);*/
 
   // ➕ Agregar cliente pendiente (evita duplicados)
   const addClientePendiente = (cliente) => {
@@ -166,135 +166,135 @@ export const AceptarProvider = ({ children }) => {
 
   // 🔍 Revisar cliente (cambia a "En revisión", no se elimina)
   const revisarCliente = async (id) => {
-  const cliente = clientesPendientes.find((c) => c.id === id);
-  if (!cliente) return;
+    const cliente = clientesPendientes.find((c) => c.id === id);
+    if (!cliente) return;
 
-  Swal.fire({
-    title: "¿Revisar cliente?",
-    text: "El estado cambiará a 'En revisión'.",
-    icon: "question",
-    showCancelButton: true,
-    confirmButtonText: "Sí, revisar",
-    cancelButtonText: "Cancelar",
-    confirmButtonColor: "#58AB01",
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      try {
-        const res = await fetch(`${API_URL}cliente/${id}/estado?nuevoEstado=En revisión`, {
-          method: "PUT",
-        });
+    Swal.fire({
+      title: "¿Revisar cliente?",
+      text: "El estado cambiará a 'En revisión'.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sí, revisar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#58AB01",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await fetch(`${API_URL}cliente/${id}/estado?nuevoEstado=En revisión`, {
+            method: "PUT",
+          });
 
-        if (res.ok) {
-          setClientesPendientes((prev) =>
-            prev.map((c) =>
-              c.id === id
-                ? { ...c, clienteestado: { ...c.clienteestado, descripcion: "En revisión" } }
-                : c
-            )
-          );
+          if (res.ok) {
+            setClientesPendientes((prev) =>
+              prev.map((c) =>
+                c.id === id
+                  ? { ...c, clienteestado: { ...c.clienteestado, descripcion: "En revisión" } }
+                  : c
+              )
+            );
 
-          // ⚠️ NO eliminar notificación
-          console.log(`🟡 Cliente ${id} en revisión, notificación conservada`);
+            // ⚠️ NO eliminar notificación
+            console.log(`🟡 Cliente ${id} en revisión, notificación conservada`);
 
-          Swal.fire("En revisión", "El cliente está en revisión.", "info");
+            Swal.fire("En revisión", "El cliente está en revisión.", "info");
+          }
+        } catch (error) {
+          console.error("Error al revisar cliente:", error);
+          Swal.fire("Error", "No se pudo actualizar el estado.", "error");
         }
-      } catch (error) {
-        console.error("Error al revisar cliente:", error);
-        Swal.fire("Error", "No se pudo actualizar el estado.", "error");
       }
-    }
-  });
-};
+    });
+  };
 
   // ✅ Aprobar cliente
   const aprobarCliente = async (id, dataExtra) => {
-  const cliente = clientesPendientes.find((c) => c.id === id);
-  if (!cliente) return;
+    const cliente = clientesPendientes.find((c) => c.id === id);
+    if (!cliente) return;
 
-  Swal.fire({
-    title: "¿Aprobar cliente?",
-    text: "Confirma que deseas aceptar al cliente.",
-    icon: "question",
-    showCancelButton: true,
-    confirmButtonText: "Sí, aprobar",
-    cancelButtonText: "Cancelar",
-    confirmButtonColor: "#58AB01",
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: "Procesando...",
-        text: "Por favor espera un momento",
-        allowOutsideClick: false,
-        didOpen: () => Swal.showLoading(),
-      });
-
-      try {
-        const res = await fetch(`${API_URL}cliente/${id}/estado?nuevoEstado=Aceptado`, {
-          method: "PUT",
+    Swal.fire({
+      title: "¿Aprobar cliente?",
+      text: "Confirma que deseas aceptar al cliente.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sí, aprobar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#58AB01",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Procesando...",
+          text: "Por favor espera un momento",
+          allowOutsideClick: false,
+          didOpen: () => Swal.showLoading(),
         });
 
-        if (res.ok) {
-          setClientesPendientes((prev) => prev.filter((c) => c.id !== id));
+        try {
+          const res = await fetch(`${API_URL}cliente/${id}/estado?nuevoEstado=Aceptado`, {
+            method: "PUT",
+          });
 
-          // ✅ Eliminar notificación solo aquí
-          if (removeNotification) removeNotification(id, "Aceptado");
+          if (res.ok) {
+            setClientesPendientes((prev) => prev.filter((c) => c.id !== id));
 
-          Swal.fire("✅ Aprobado", "El cliente fue aceptado correctamente.", "success");
-        } else {
-          Swal.fire("Error", "No se pudo aprobar el cliente.", "error");
+            // ✅ Eliminar notificación solo aquí
+            if (removeNotification) removeNotification(id, "Aceptado");
+
+            Swal.fire("✅ Aprobado", "El cliente fue aceptado correctamente.", "success");
+          } else {
+            Swal.fire("Error", "No se pudo aprobar el cliente.", "error");
+          }
+        } catch (error) {
+          console.error("Error al aprobar cliente:", error);
+          Swal.fire("Error", "Fallo de conexión al servidor.", "error");
         }
-      } catch (error) {
-        console.error("Error al aprobar cliente:", error);
-        Swal.fire("Error", "Fallo de conexión al servidor.", "error");
       }
-    }
-  });
-};
+    });
+  };
 
 
   // ❌ Rechazar cliente
   const rechazarCliente = async (id) => {
-  const cliente = clientesPendientes.find((c) => c.id === id);
-  if (!cliente) return;
+    const cliente = clientesPendientes.find((c) => c.id === id);
+    if (!cliente) return;
 
-  Swal.fire({
-    title: "¿Rechazar cliente?",
-    text: "Esta acción no se puede deshacer.",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Sí, rechazar",
-    cancelButtonText: "Cancelar",
-    confirmButtonColor: "#d33",
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: "Rechazando...",
-        allowOutsideClick: false,
-        didOpen: () => Swal.showLoading(),
-      });
-
-      try {
-        const res = await fetch(`${API_URL}cliente/${id}/estado?nuevoEstado=Rechazado`, {
-          method: "PUT",
+    Swal.fire({
+      title: "¿Rechazar cliente?",
+      text: "Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, rechazar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#d33",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Rechazando...",
+          allowOutsideClick: false,
+          didOpen: () => Swal.showLoading(),
         });
 
-        if (res.ok) {
-          setClientesPendientes((prev) => prev.filter((c) => c.id !== id));
+        try {
+          const res = await fetch(`${API_URL}cliente/${id}/estado?nuevoEstado=Rechazado`, {
+            method: "PUT",
+          });
 
-          // ✅ Eliminar notificación solo si se rechaza
-          if (removeNotification) removeNotification(id, "Rechazado");
+          if (res.ok) {
+            setClientesPendientes((prev) => prev.filter((c) => c.id !== id));
 
-          Swal.fire("Rechazado", "El cliente fue rechazado correctamente.", "success");
-        } else {
-          Swal.fire("Error", "No se pudo rechazar el cliente.", "error");
+            // ✅ Eliminar notificación solo si se rechaza
+            if (removeNotification) removeNotification(id, "Rechazado");
+
+            Swal.fire("Rechazado", "El cliente fue rechazado correctamente.", "success");
+          } else {
+            Swal.fire("Error", "No se pudo rechazar el cliente.", "error");
+          }
+        } catch (error) {
+          console.error("Error al rechazar cliente:", error);
+          Swal.fire("Error", "Fallo de conexión al servidor.", "error");
         }
-      } catch (error) {
-        console.error("Error al rechazar cliente:", error);
-        Swal.fire("Error", "Fallo de conexión al servidor.", "error");
       }
-    }
-  });
-};
+    });
+  };
 
   return (
     <AceptarContext.Provider

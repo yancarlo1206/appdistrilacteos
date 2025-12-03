@@ -29,6 +29,21 @@ const initialForm = {
   clienteEstado: "",
 };
 
+const initialFormUpdate = {
+  nombre: "",
+  direccion: "",
+  telefono: "",
+  correo: "",
+  tipoDocumento: "",
+  documento: "",
+  ciudad: "",
+  tipoCliente: "",
+  zona: "",
+  vendedor: "",
+  listaPrecio: "",
+  clienteEstado: "",
+};
+
 const Formulario = () => {
   const {
     detail: data,
@@ -42,6 +57,10 @@ const Formulario = () => {
     ciudades,
     tipoDocumentos,
     estadoClientes,
+    zonas,
+    vendedores,
+    listaPrecios,
+    tipoClientes,
   } = useContext(ClienteContext);
 
   const {
@@ -72,7 +91,11 @@ const Formulario = () => {
 
   useEffect(() => {
     setForm(data);
-    setErrors(initialForm);
+    if (module === "actualizar") {
+      setErrors(initialFormUpdate);
+    } else {
+      setErrors(initialForm);
+    }
   }, [data]);
 
   const handleUpdate = (e) => {
@@ -197,7 +220,7 @@ const Formulario = () => {
                             className="form-control-label"
                             htmlFor="input-telefono"
                           >
-                            Telefono <span className="text-danger">*</span>
+                            Teléfono <span className="text-danger">*</span>
                           </label>
                           <Input
                             className="form-control"
@@ -252,7 +275,7 @@ const Formulario = () => {
                             className="form-control-label"
                             htmlFor="input-direccion"
                           >
-                            Direccion <span className="text-danger">*</span>
+                            Dirección <span className="text-danger">*</span>
                           </label>
                           <Input
                             className="form-control"
@@ -302,43 +325,151 @@ const Formulario = () => {
                           </div>
                         </FormGroup>
                       </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-estadoCliente"
-                          >
-                            Estado Cliente <span className="text-danger">*</span>
-                          </label>
-                          <Input
-                            className="form-control"
-                            id="input-clienteEstado"
-                            type="select"
-                            name="clienteEstado"
-                            value={form.clienteEstado}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            invalid={errors.clienteEstado !== ""}
-                          >
-                            <option value="" hidden></option>
-                            {estadoClientes.map(item => (
-                              <option key={item.id} value={item.id}>
-                                {item.text}
-                              </option>
-                            ))};
-                          </Input>
-                          <div className="invalid-feedback">
-                            {errors.clienteEstado}
-                          </div>
-                        </FormGroup>
-                      </Col>
+                      {module === 'actualizar' && (
+                        <>
+                          <Col lg="6">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-tipoCliente"
+                              >
+                                Tipo Cliente
+                              </label>
+                              <Input
+                                className="form-control"
+                                id="input-tipoCliente"
+                                type="select"
+                                name="tipoCliente"
+                                value={form.tipoCliente}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              >
+                                <option value="" hidden></option>
+                                {tipoClientes.map(item => (
+                                  <option key={item.id} value={item.id}>
+                                    {item.text}
+                                  </option>
+                                ))};
+                              </Input>
+                            </FormGroup>
+                          </Col>
+                          <Col lg="6">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-zona"
+                              >
+                                Zona
+                              </label>
+                              <Input
+                                className="form-control"
+                                id="input-zona"
+                                type="select"
+                                name="zona"
+                                value={form.zona}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              >
+                                <option value="" hidden></option>
+                                {zonas.map(item => (
+                                  <option key={item.id} value={item.id}>
+                                    {item.text}
+                                  </option>
+                                ))};
+                              </Input>
+                            </FormGroup>
+                          </Col>
+                          <Col lg="6">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-listaPrecio"
+                              >
+                                Lista Precio
+                              </label>
+                              <Input
+                                className="form-control"
+                                id="input-listaPrecio"
+                                type="select"
+                                name="listaPrecio"
+                                value={form.listaPrecio}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              >
+                                <option value="" hidden></option>
+                                {listaPrecios.map(item => (
+                                  <option key={item.id} value={item.id}>
+                                    {item.text}
+                                  </option>
+                                ))};
+                              </Input>
+                            </FormGroup>
+                          </Col>
+                          <Col lg="6">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-vendedor"
+                              >
+                                Vendedor
+                              </label>
+                              <Input
+                                className="form-control"
+                                id="input-vendedor"
+                                type="select"
+                                name="vendedor"
+                                value={form.vendedor}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              >
+                                <option value="" hidden></option>
+                                {vendedores.map(item => (
+                                  <option key={item.id} value={item.id}>
+                                    {item.text}
+                                  </option>
+                                ))};
+                              </Input>
+                            </FormGroup>
+                          </Col>
+                          <Col lg="6">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-estadoCliente"
+                              >
+                                Estado Cliente <span className="text-danger">*</span>
+                              </label>
+                              <Input
+                                className="form-control"
+                                id="input-clienteEstado"
+                                type="select"
+                                name="clienteEstado"
+                                value={form.clienteEstado}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                invalid={errors.clienteEstado !== ""}
+                              >
+                                <option value="" hidden></option>
+                                {estadoClientes.map(item => (
+                                  <option key={item.id} value={item.id}>
+                                    {item.text}
+                                  </option>
+                                ))};
+                              </Input>
+                              <div className="invalid-feedback">
+                                {errors.clienteEstado}
+                              </div>
+                            </FormGroup>
+                          </Col>
+                        </>
+                      )}
                       <Col lg="12">
                         <FormGroup>
                           <label
                             className="form-control-label"
                             htmlFor="input-observacion"
                           >
-                            Observacion
+                            Observación
                           </label>
                           <Input
                             className="form-control"

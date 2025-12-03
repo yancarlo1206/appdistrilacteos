@@ -89,7 +89,7 @@ const RegistroProvider = ({ children }) => {
         api.get(urlFetch).then((res) => {
             if (!res.err) {
                 let porcentaje = 0;
-                if (res.data.estado === "EN PROCESO") {
+                if (res.data.estado === "EN REVISION") {
                     porcentaje = 33;
                 } else if (res.data.estado === "EN PROCESO") {
                     porcentaje = 66;

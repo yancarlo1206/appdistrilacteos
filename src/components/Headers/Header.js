@@ -30,9 +30,9 @@ const Header = () => {
 
   // 🔹 Filtrar pendientes (En proceso o En revisión)
   const notificacionesPendientes = notificaciones.filter((n) => {
-  const estado = n.estado?.toLowerCase() || "";
-  return estado.includes("proceso") || estado.includes("revision");
-});
+    const estado = n.estado?.toLowerCase() || "";
+    return estado.includes("proceso") || estado.includes("revision");
+  });
 
   const [mostrarPopup, setMostrarPopup] = useState(false);
   const [animar, setAnimar] = useState(false);
@@ -46,7 +46,7 @@ const Header = () => {
   }, [status]);
 
   // Animación cuando hay notificaciones pendientes
-  useEffect(() => {
+  /*useEffect(() => {
     let interval;
     if (notificacionesPendientes.length > 0) {
       setAnimar(true);
@@ -57,7 +57,7 @@ const Header = () => {
       setAnimar(false);
     }
     return () => clearInterval(interval);
-  }, [notificacionesPendientes.length]);
+  }, [notificacionesPendientes.length]);*/
 
   return (
     <>
