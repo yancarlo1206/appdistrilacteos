@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
+import Select from "react-select";
 import { Button, Card, CardHeader, CardBody, FormGroup, Form, Input, Container, Row, Col } from "reactstrap";
 
 import { Link, useParams } from "react-router-dom";
@@ -50,6 +51,34 @@ const Formulario = () => {
         }
     }
 
+    const handleSelectChange = (selectedOption, action) => {
+        handleChange({
+            target: {
+                name: action.name,
+                value: selectedOption ? selectedOption.value : ""
+            }
+        });
+    };
+
+    const customStyles = {
+        control: (base, state) => ({
+            ...base,
+            borderColor: state.isFocused ? "#5e72e4" : "#cad1d7",
+            boxShadow: state.isFocused ? "0 0 0 0.2rem rgba(94, 114, 228, 0.25)" : null,
+            "&:hover": {
+                borderColor: "#5e72e4"
+            }
+        })
+    };
+
+    // Helper to find the current selected option object
+    const getSelectedOption = (options, value) => {
+        return options.find(option => option.value === value) || null;
+    };
+
+    const optionsTipoDocumentos = tipoDocumentos.map(i => ({ value: i.id, label: i.text }));
+    const optionsCiudades = ciudades.map(i => ({ value: i.id, label: i.text }));
+
     return (
         <>
             <Container className="mt--6" fluid>
@@ -78,24 +107,18 @@ const Formulario = () => {
                                                     >
                                                         Tipo Documento <span className="text-danger">*</span>
                                                     </label>
-                                                    <Input
-                                                        className="form-control"
+                                                    <Select
                                                         id="input-tipoDocumento"
-                                                        type="select"
                                                         name="tipoDocumento"
-                                                        value={form.tipoDocumento}
-                                                        onChange={handleChange}
+                                                        options={optionsTipoDocumentos}
+                                                        value={getSelectedOption(optionsTipoDocumentos, form.tipoDocumento)}
+                                                        onChange={handleSelectChange}
                                                         onBlur={handleBlur}
-                                                        invalid={errors.tipoDocumento !== ""}
-                                                    >
-                                                        <option value="" hidden></option>
-                                                        {tipoDocumentos.map(item => (
-                                                            <option key={item.id} value={item.id}>
-                                                                {item.text}
-                                                            </option>
-                                                        ))};
-                                                    </Input>
-                                                    <div className="invalid-feedback">
+                                                        placeholder="Seleccione..."
+                                                        styles={customStyles}
+                                                        className={errors.tipoDocumento ? "is-invalid" : ""}
+                                                    />
+                                                    <div className="invalid-feedback" style={{ display: errors.tipoDocumento ? "block" : "none" }}>
                                                         {errors.tipoDocumento}
                                                     </div>
                                                 </FormGroup>
@@ -236,24 +259,18 @@ const Formulario = () => {
                                                     >
                                                         Ciudad <span className="text-danger">*</span>
                                                     </label>
-                                                    <Input
-                                                        className="form-control"
+                                                    <Select
                                                         id="input-ciudad"
-                                                        type="select"
                                                         name="ciudad"
-                                                        value={form.ciudad}
-                                                        onChange={handleChange}
+                                                        options={optionsCiudades}
+                                                        value={getSelectedOption(optionsCiudades, form.ciudad)}
+                                                        onChange={handleSelectChange}
                                                         onBlur={handleBlur}
-                                                        invalid={errors.ciudad !== ""}
-                                                    >
-                                                        <option value="" hidden></option>
-                                                        {ciudades.map(item => (
-                                                            <option key={item.id} value={item.id}>
-                                                                {item.text}
-                                                            </option>
-                                                        ))};
-                                                    </Input>
-                                                    <div className="invalid-feedback">
+                                                        placeholder="Seleccione..."
+                                                        styles={customStyles}
+                                                        className={errors.ciudad ? "is-invalid" : ""}
+                                                    />
+                                                    <div className="invalid-feedback" style={{ display: errors.ciudad ? "block" : "none" }}>
                                                         {errors.ciudad}
                                                     </div>
                                                 </FormGroup>

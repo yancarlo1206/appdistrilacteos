@@ -11,7 +11,7 @@ import ReactBSAlert from "react-bootstrap-sweetalert";
 function List({ tab }) {
 
     const {
-        db: data, setDetail, setToDetail, setToUpdate, setViewModal, setModule, deleteData
+        db: data, setDetail, setToDetail, setToUpdate, setViewModal, setModule, deleteData, fetchData
     } = useContext(ClienteContext);
 
     const [filter, setFilter] = useState("");
@@ -83,6 +83,8 @@ function List({ tab }) {
     useEffect(() => {
         setDetail({});
         setToUpdate(0);
+        // Recargar todos los clientes
+        fetchData();
     }, []);
 
     useEffect(() => {

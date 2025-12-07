@@ -32,6 +32,8 @@ const ClienteProvider = ({ children }) => {
   const [listaPrecios, setListaPrecios] = useState([]);
   const [tipoClientes, setTipoClientes] = useState([]);
 
+  const [codigoCliente, setCodigoCliente] = useState(0);
+
   const navigate = useNavigate();
   const { REACT_APP_API_URL } = process.env;
 
@@ -74,21 +76,59 @@ const ClienteProvider = ({ children }) => {
       } else {
         dispatch({ type: TYPES.NO_DATA });
       }
-      //setLoading(false);
+      setLoading(false);
     });
   };
 
-  const fetchDataDetail = () => {
+  const fetchDataEnRevision = () => {
     setLoading(true);
-    url = url + "/" + toUpdate;
-    api.get(url).then((res) => {
+    const urlEnRevision = url + "/pendientes";
+    api.get(urlEnRevision).then((res) => {
+      if (!res.err) {
+        dispatch({ type: TYPES.READ_ALL_DATA, payload: res.data });
+      } else {
+        dispatch({ type: TYPES.NO_DATA });
+      }
+      setLoading(false);
+    });
+  };
+
+  const fetchDataDetail = async () => {
+    setLoading(true);
+    let urlFetch = url + "/" + toUpdate;
+    api.get(urlFetch).then(async (res) => {
       const detail = {
         ...res.data,
         ciudad: res.data?.ciudad?.id ?? null,
         tipoDocumento: res.data?.tipoDocumento?.id ?? null,
         clienteEstado: res.data?.clienteEstado?.id ?? null,
       };
-      setDetail(detail);
+
+      const detailInformation = await fetchDataDetailInformation();
+
+      const detailComplete = {
+        ...detail,
+        ...detailInformation,
+      };
+
+      setDetail(detailComplete);
+      setLoading(false);
+
+    });
+  };
+
+  const fetchDataDetailInformation = () => {
+    let urlFetch = url + "/clienteInfo/" + toUpdate;
+    return api.get(urlFetch).then((res) => {
+      const detailInformation = {
+        ...res.data,
+        cliente: res.data?.clienteInformacion?.cliente?.id ?? null,
+        zona: res.data?.clienteInformacion?.zona?.id ?? null,
+        vendedor: res.data?.clienteInformacion?.vendedor?.id ?? null,
+        listaPrecio: res.data?.clienteInformacion?.listaPrecio?.id ?? null,
+        tipoCliente: res.data?.clienteInformacion?.tipoCliente?.id ?? null,
+      };
+      return detailInformation;
     });
   };
 
@@ -203,11 +243,13 @@ const ClienteProvider = ({ children }) => {
     setLoading(true);
     let endpoint = url + "/" + data.id;
 
+    let estado = data.clienteEstado === 1 ? 2 : data.clienteEstado;
+
     const newData = {
       ...data,
       ciudad: { id: data.ciudad },
       tipoDocumento: { id: data.tipoDocumento },
-      clienteEstado: { id: data.clienteEstado }
+      clienteEstado: { id: estado }
     };
 
     delete newData.id;
@@ -220,7 +262,7 @@ const ClienteProvider = ({ children }) => {
     api.put(endpoint, options).then((res) => {
       if (!res.err) {
         setDetail(res.data);
-        updateDataInformation(data);
+        updateDataInformation(data, data.clienteEstado);
         dispatch({ type: TYPES.UPDATE_DATA, payload: res.data });
         navigate("/admin/cliente");
         setType("success");
@@ -232,12 +274,12 @@ const ClienteProvider = ({ children }) => {
     });
   };
 
-  const updateDataInformation = (data) => {
+  const updateDataInformation = (data, clienteEstado) => {
 
     let endpoint = REACT_APP_API_URL + "clienteinformacion";
 
     const newData = {
-      cliente: { id: data.id },
+      cliente: { id: toUpdate },
       zona: { id: data.zona },
       vendedor: { id: data.vendedor },
       listaprecio: { id: data.listaPrecio },
@@ -249,12 +291,13 @@ const ClienteProvider = ({ children }) => {
       headers: { "content-type": "application/json" },
     };
 
-    api.post(endpoint, options).then((res) => {
-      if (!res.err) {
+    if (clienteEstado === 1) {
+      api.post(endpoint, options).then((res) => { });
+    } else {
+      endpoint = endpoint + "/" + data.clienteInformacion.id;
+      api.put(endpoint, options).then((res) => { });
+    }
 
-      }
-
-    });
   };
 
   const deleteData = (id) => {
@@ -297,6 +340,8 @@ const ClienteProvider = ({ children }) => {
     vendedores,
     listaPrecios,
     tipoClientes,
+    fetchData, // Función para cargar todos los clientes
+    fetchDataEnRevision, // Nueva función para cargar clientes en revisión
   };
 
   return (

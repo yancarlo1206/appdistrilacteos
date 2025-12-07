@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
+import Select from "react-select";
 import {
   Button,
   Card,
@@ -114,6 +115,40 @@ const Formulario = () => {
     }
   };
 
+  const handleSelectChange = (selectedOption, action) => {
+    handleChange({
+      target: {
+        name: action.name,
+        value: selectedOption ? selectedOption.value : ""
+      }
+    });
+  };
+
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      borderColor: state.isFocused ? "#65e45eff" : "#cad1d7",
+      boxShadow: state.isFocused ? "0 0 0 0.2rem rgba(94, 114, 228, 0.25)" : null,
+      "&:hover": {
+        borderColor: "#65e45eff"
+      }
+    })
+  };
+
+  // Helper to find the current selected option object
+  const getSelectedOption = (options, value) => {
+    return options.find(option => option.value === value) || null;
+  };
+
+  // Map data to options
+  const optionsTipoDocumentos = tipoDocumentos.map(i => ({ value: i.id, label: i.text }));
+  const optionsCiudades = ciudades.map(i => ({ value: i.id, label: i.text }));
+  const optionsTipoClientes = tipoClientes.map(i => ({ value: i.id, label: i.text }));
+  const optionsZonas = zonas.map(i => ({ value: i.id, label: i.text }));
+  const optionsListaPrecios = listaPrecios.map(i => ({ value: i.id, label: i.text }));
+  const optionsVendedores = vendedores.map(i => ({ value: i.id, label: i.nombre || i.text }));
+  const optionsEstadoClientes = estadoClientes.map(i => ({ value: i.id, label: i.text }));
+
   return (
     <>
       <Container className="mt--7" fluid>
@@ -142,24 +177,18 @@ const Formulario = () => {
                           >
                             Tipo Documento <span className="text-danger">*</span>
                           </label>
-                          <Input
-                            className="form-control"
+                          <Select
                             id="input-tipoDocumento"
-                            type="select"
                             name="tipoDocumento"
-                            value={form.tipoDocumento}
-                            onChange={handleChange}
+                            options={optionsTipoDocumentos}
+                            value={getSelectedOption(optionsTipoDocumentos, form.tipoDocumento)}
+                            onChange={handleSelectChange}
                             onBlur={handleBlur}
-                            invalid={errors.tipoDocumento !== ""}
-                          >
-                            <option value="" hidden></option>
-                            {tipoDocumentos.map(item => (
-                              <option key={item.id} value={item.id}>
-                                {item.text}
-                              </option>
-                            ))};
-                          </Input>
-                          <div className="invalid-feedback">
+                            placeholder="Seleccione..."
+                            styles={customStyles}
+                            className={errors.tipoDocumento ? "is-invalid" : ""}
+                          />
+                          <div className="invalid-feedback" style={{ display: errors.tipoDocumento ? "block" : "none" }}>
                             {errors.tipoDocumento}
                           </div>
                         </FormGroup>
@@ -303,24 +332,18 @@ const Formulario = () => {
                           >
                             Ciudad <span className="text-danger">*</span>
                           </label>
-                          <Input
-                            className="form-control"
+                          <Select
                             id="input-ciudad"
-                            type="select"
                             name="ciudad"
-                            value={form.ciudad}
-                            onChange={handleChange}
+                            options={optionsCiudades}
+                            value={getSelectedOption(optionsCiudades, form.ciudad)}
+                            onChange={handleSelectChange}
                             onBlur={handleBlur}
-                            invalid={errors.ciudad !== ""}
-                          >
-                            <option value="" hidden></option>
-                            {ciudades.map(item => (
-                              <option key={item.id} value={item.id}>
-                                {item.text}
-                              </option>
-                            ))};
-                          </Input>
-                          <div className="invalid-feedback">
+                            placeholder="Seleccione..."
+                            styles={customStyles}
+                            className={errors.ciudad ? "is-invalid" : ""}
+                          />
+                          <div className="invalid-feedback" style={{ display: errors.ciudad ? "block" : "none" }}>
                             {errors.ciudad}
                           </div>
                         </FormGroup>
@@ -335,24 +358,18 @@ const Formulario = () => {
                               >
                                 Tipo Cliente <span className="text-danger">*</span>
                               </label>
-                              <Input
-                                className="form-control"
+                              <Select
                                 id="input-tipoCliente"
-                                type="select"
                                 name="tipoCliente"
-                                value={form.tipoCliente}
-                                onChange={handleChange}
+                                options={optionsTipoClientes}
+                                value={getSelectedOption(optionsTipoClientes, form.tipoCliente)}
+                                onChange={handleSelectChange}
                                 onBlur={handleBlur}
-                                invalid={errors.tipoCliente !== ""}
-                              >
-                                <option value="" hidden></option>
-                                {tipoClientes.map(item => (
-                                  <option key={item.id} value={item.id}>
-                                    {item.text}
-                                  </option>
-                                ))};
-                              </Input>
-                              <div className="invalid-feedback">
+                                placeholder="Seleccione..."
+                                styles={customStyles}
+                                className={errors.tipoCliente ? "is-invalid" : ""}
+                              />
+                              <div className="invalid-feedback" style={{ display: errors.tipoCliente ? "block" : "none" }}>
                                 {errors.tipoCliente}
                               </div>
                             </FormGroup>
@@ -365,24 +382,18 @@ const Formulario = () => {
                               >
                                 Zona <span className="text-danger">*</span>
                               </label>
-                              <Input
-                                className="form-control"
+                              <Select
                                 id="input-zona"
-                                type="select"
                                 name="zona"
-                                value={form.zona}
-                                onChange={handleChange}
+                                options={optionsZonas}
+                                value={getSelectedOption(optionsZonas, form.zona)}
+                                onChange={handleSelectChange}
                                 onBlur={handleBlur}
-                                invalid={errors.zona !== ""}
-                              >
-                                <option value="" hidden></option>
-                                {zonas.map(item => (
-                                  <option key={item.id} value={item.id}>
-                                    {item.text}
-                                  </option>
-                                ))};
-                              </Input>
-                              <div className="invalid-feedback">
+                                placeholder="Seleccione..."
+                                styles={customStyles}
+                                className={errors.zona ? "is-invalid" : ""}
+                              />
+                              <div className="invalid-feedback" style={{ display: errors.zona ? "block" : "none" }}>
                                 {errors.zona}
                               </div>
                             </FormGroup>
@@ -395,24 +406,18 @@ const Formulario = () => {
                               >
                                 Lista Precio <span className="text-danger">*</span>
                               </label>
-                              <Input
-                                className="form-control"
+                              <Select
                                 id="input-listaPrecio"
-                                type="select"
                                 name="listaPrecio"
-                                value={form.listaPrecio}
-                                onChange={handleChange}
+                                options={optionsListaPrecios}
+                                value={getSelectedOption(optionsListaPrecios, form.listaPrecio)}
+                                onChange={handleSelectChange}
                                 onBlur={handleBlur}
-                                invalid={errors.listaPrecio !== ""}
-                              >
-                                <option value="" hidden></option>
-                                {listaPrecios.map(item => (
-                                  <option key={item.id} value={item.id}>
-                                    {item.text}
-                                  </option>
-                                ))};
-                              </Input>
-                              <div className="invalid-feedback">
+                                placeholder="Seleccione..."
+                                styles={customStyles}
+                                className={errors.listaPrecio ? "is-invalid" : ""}
+                              />
+                              <div className="invalid-feedback" style={{ display: errors.listaPrecio ? "block" : "none" }}>
                                 {errors.listaPrecio}
                               </div>
                             </FormGroup>
@@ -425,24 +430,18 @@ const Formulario = () => {
                               >
                                 Vendedor <span className="text-danger">*</span>
                               </label>
-                              <Input
-                                className="form-control"
+                              <Select
                                 id="input-vendedor"
-                                type="select"
                                 name="vendedor"
-                                value={form.vendedor}
-                                onChange={handleChange}
+                                options={optionsVendedores}
+                                value={getSelectedOption(optionsVendedores, form.vendedor)}
+                                onChange={handleSelectChange}
                                 onBlur={handleBlur}
-                                invalid={errors.vendedor !== ""}
-                              >
-                                <option value="" hidden></option>
-                                {vendedores.map(item => (
-                                  <option key={item.id} value={item.id}>
-                                    {item.text}
-                                  </option>
-                                ))};
-                              </Input>
-                              <div className="invalid-feedback">
+                                placeholder="Seleccione..."
+                                styles={customStyles}
+                                className={errors.vendedor ? "is-invalid" : ""}
+                              />
+                              <div className="invalid-feedback" style={{ display: errors.vendedor ? "block" : "none" }}>
                                 {errors.vendedor}
                               </div>
                             </FormGroup>
@@ -455,24 +454,19 @@ const Formulario = () => {
                               >
                                 Estado Cliente <span className="text-danger">*</span>
                               </label>
-                              <Input
-                                className="form-control"
+                              <Select
                                 id="input-clienteEstado"
-                                type="select"
                                 name="clienteEstado"
-                                value={form.clienteEstado}
-                                onChange={handleChange}
+                                options={optionsEstadoClientes}
+                                value={getSelectedOption(optionsEstadoClientes, form.clienteEstado)}
+                                onChange={handleSelectChange}
                                 onBlur={handleBlur}
-                                invalid={errors.clienteEstado !== ""}
-                              >
-                                <option value="" hidden></option>
-                                {estadoClientes.map(item => (
-                                  <option key={item.id} value={item.id}>
-                                    {item.text}
-                                  </option>
-                                ))};
-                              </Input>
-                              <div className="invalid-feedback">
+                                placeholder="Seleccione..."
+                                styles={customStyles}
+                                isDisabled={true}
+                                className={errors.clienteEstado ? "is-invalid" : ""}
+                              />
+                              <div className="invalid-feedback" style={{ display: errors.clienteEstado ? "block" : "none" }}>
                                 {errors.clienteEstado}
                               </div>
                             </FormGroup>

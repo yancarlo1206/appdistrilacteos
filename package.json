@@ -62,6 +62,7 @@
     "react-notification-alert": "0.0.13",
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
+    "react-select": "^5.10.2",
     "reactstrap": "8.10.0",
     "sass": "1.69.5",
     "styled-components": "^6.1.19",

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
+import Select from "react-select";
 import {
     Button,
     Card,
@@ -87,6 +88,35 @@ const Formulario = () => {
         }
     };
 
+    const handleSelectChange = (selectedOption, action) => {
+        handleChange({
+            target: {
+                name: action.name,
+                value: selectedOption ? selectedOption.value : ""
+            }
+        });
+    };
+
+    const customStyles = {
+        control: (base, state) => ({
+            ...base,
+            borderColor: state.isFocused ? "#5e72e4" : "#cad1d7",
+            boxShadow: state.isFocused ? "0 0 0 0.2rem rgba(94, 114, 228, 0.25)" : null,
+            "&:hover": {
+                borderColor: "#5e72e4"
+            }
+        })
+    };
+
+    // Helper to find the current selected option object
+    const getSelectedOption = (options, value) => {
+        return options.find(option => option.value === value) || null;
+    };
+
+    const optionsPrioridades = prioridades.map(i => ({ value: i.id, label: i.text }));
+    const optionsTipoTickets = tipoTickets.map(i => ({ value: i.id, label: i.text }));
+    const optionsEstadoTickets = estadoTickets.map(i => ({ value: i.id, label: i.text }));
+
     return (
         <>
             <Container className="mt--7" fluid>
@@ -141,24 +171,18 @@ const Formulario = () => {
                                                     >
                                                         Prioridad <span className="text-danger">*</span>
                                                     </label>
-                                                    <Input
-                                                        className="form-control"
+                                                    <Select
                                                         id="input-prioridad"
-                                                        type="select"
                                                         name="prioridad"
-                                                        value={form.prioridad}
-                                                        onChange={handleChange}
+                                                        options={optionsPrioridades}
+                                                        value={getSelectedOption(optionsPrioridades, form.prioridad)}
+                                                        onChange={handleSelectChange}
                                                         onBlur={handleBlur}
-                                                        invalid={errors.prioridad !== ""}
-                                                    >
-                                                        <option value="" hidden></option>
-                                                        {prioridades.map(item => (
-                                                            <option key={item.id} value={item.id}>
-                                                                {item.text}
-                                                            </option>
-                                                        ))};
-                                                    </Input>
-                                                    <div className="invalid-feedback">
+                                                        placeholder="Seleccione..."
+                                                        styles={customStyles}
+                                                        className={errors.prioridad ? "is-invalid" : ""}
+                                                    />
+                                                    <div className="invalid-feedback" style={{ display: errors.prioridad ? "block" : "none" }}>
                                                         {errors.prioridad}
                                                     </div>
                                                 </FormGroup>
@@ -171,24 +195,18 @@ const Formulario = () => {
                                                     >
                                                         Tipo <span className="text-danger">*</span>
                                                     </label>
-                                                    <Input
-                                                        className="form-control"
+                                                    <Select
                                                         id="input-tipo"
-                                                        type="select"
                                                         name="tipo"
-                                                        value={form.tipo}
-                                                        onChange={handleChange}
+                                                        options={optionsTipoTickets}
+                                                        value={getSelectedOption(optionsTipoTickets, form.tipo)}
+                                                        onChange={handleSelectChange}
                                                         onBlur={handleBlur}
-                                                        invalid={errors.tipo !== ""}
-                                                    >
-                                                        <option value="" hidden></option>
-                                                        {tipoTickets.map(item => (
-                                                            <option key={item.id} value={item.id}>
-                                                                {item.text}
-                                                            </option>
-                                                        ))};
-                                                    </Input>
-                                                    <div className="invalid-feedback">
+                                                        placeholder="Seleccione..."
+                                                        styles={customStyles}
+                                                        className={errors.tipo ? "is-invalid" : ""}
+                                                    />
+                                                    <div className="invalid-feedback" style={{ display: errors.tipo ? "block" : "none" }}>
                                                         {errors.tipo}
                                                     </div>
                                                 </FormGroup>
@@ -201,24 +219,18 @@ const Formulario = () => {
                                                     >
                                                         Estado <span className="text-danger">*</span>
                                                     </label>
-                                                    <Input
-                                                        className="form-control"
+                                                    <Select
                                                         id="input-estado"
-                                                        type="select"
                                                         name="estado"
-                                                        value={form.estado}
-                                                        onChange={handleChange}
+                                                        options={optionsEstadoTickets}
+                                                        value={getSelectedOption(optionsEstadoTickets, form.estado)}
+                                                        onChange={handleSelectChange}
                                                         onBlur={handleBlur}
-                                                        invalid={errors.estado !== ""}
-                                                    >
-                                                        <option value="" hidden></option>
-                                                        {estadoTickets.map(item => (
-                                                            <option key={item.id} value={item.id}>
-                                                                {item.text}
-                                                            </option>
-                                                        ))};
-                                                    </Input>
-                                                    <div className="invalid-feedback">
+                                                        placeholder="Seleccione..."
+                                                        styles={customStyles}
+                                                        className={errors.estado ? "is-invalid" : ""}
+                                                    />
+                                                    <div className="invalid-feedback" style={{ display: errors.estado ? "block" : "none" }}>
                                                         {errors.estado}
                                                     </div>
                                                 </FormGroup>

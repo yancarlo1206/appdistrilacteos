@@ -10,7 +10,7 @@ import { FormGroup, Label, Input } from "reactstrap";
 function List({ tab }) {
 
     const {
-        db: data, setDetail, setToDetail, setToUpdate, setViewModal, setModule
+        db: data, setDetail, setToDetail, setToUpdate, setViewModal, setModule, fetchDataEnRevision
     } = useContext(ClienteContext);
 
     const [filter, setFilter] = useState("");
@@ -45,6 +45,8 @@ function List({ tab }) {
     useEffect(() => {
         setDetail({});
         setToUpdate(0);
+        // Cargar solo clientes en revisión
+        fetchDataEnRevision();
     }, []);
 
     return (
@@ -80,6 +82,15 @@ function List({ tab }) {
                                     pagination
                                     highlightOnHover
                                 />
+                                <div className="m-3">
+                                    <Link
+                                        className='btn btn-danger'
+                                        color="default"
+                                        to={"/admin/cliente"}
+                                    >
+                                        Volver
+                                    </Link>
+                                </div>
                             </CardBody>
                         </Card>
                     </div>
